@@ -29,11 +29,11 @@ The safest option would require a key pair per-user for each machine, but it wou
 More information is available on the [deployment](./deployment/) section. 
 
 ## Maintenance
-Even though many maintenance steps have been suppressed through automation, there are still some tasks that require administrative attention and support, 
-which can be accessed on the [maintenance](./maintenance/) section.
+Even though many maintenance steps have been suppressed through automation, there are still some tasks that require administrative attention and support. 
+Please refer to he [maintenance](./maintenance/) section for more information.
 
 ## Security concerns
-Up to the available knowledge at the time of deployment the best practices and concerns related to Cyber-security have been attended. Yet, the system resilience to miscreants still relies on the most vulnerable link, users. Therefore, extreme care is advised to admin users while handling private keys and database user certificates, as those posessing them are implicitly provided access to machines and are able to undermine the system at will. Hince, under any circunstance grant access to third parties whose trust is not assured.
+Up to the available knowledge at the time of deployment, the best practices and concerns related to Cyber-security have been attended. Yet, the system resilience to miscreants still relies on the most vulnerable link, users. Therefore, extreme care is advised to admin users whilst handling private keys and database user certificates, as those posessing them are implicitly provided access to machines and are therefore able to undermine the system at will. Hince, under any circunstance grant access to third parties whose trust is not assured.
 
 ## Acknowledgments
 All collaboration and commitment of those involved in this project is trully cherished and appreciated.
