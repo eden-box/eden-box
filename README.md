@@ -9,9 +9,12 @@ providing metrics for further development and honing of the service.
 Our intent focuses on delivering a reliable way of accessing academic materials while supressing the need to waste limited study time looking for them, which could be better allocated to honest research and knowledge acquisition.
 
 ## Authors
-	- __Tiago Gonçalves__ <tiago14_ribeiro@hotmail.com>
+__Tiago Gonçalves__ - <tiago14_ribeiro@hotmail.com>
 
 ## License
 This project is licensed under the GNU Affero General Public License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgements
+All collaboration and commitment of those involved in this project is trully cherished and appreciated.
+
+_"It must be considered that there is nothing more difficult to carry out nor more doubtful of success nor more dangerous to handle than to initiate a new order of things."_ - Machiavell

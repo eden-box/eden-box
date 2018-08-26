@@ -1,5 +1,5 @@
 # Okeanos
-[Okeanos](https://okeanos.grnet.gr/home/) and [Okeanos-Global](https://pithos.okeanos-global.grnet.gr/home/) guide
+[Okeanos](https://okeanos.grnet.gr/home/) and [Okeanos-Global](https://okeanos-global.grnet.gr/home/) guide
 
 ## Description
 Okeanos is GRNET's cloud service, for the Greek Research and Academic Community. Okeanos-Global was launched, supported by the Europen union, in order to provide cloud resources to other academic communities across the globe, including Portugal. If one has access to an affiliated educational institution account, he is then able to use these resources. The available resources include 2 VM machines, Ipv4 and Ipv6 addresses, a VPN network, cloud storage and other related management utilities. For this project, only Okeanos-Global resources are used.
