@@ -1,16 +1,13 @@
 #!/usr/bin/env python3.7
 
+from queue import Queue
 from log_analyser.log_filter import _Filter as Filter
 
 
 class LogFilter(Filter):
 
     filters = []
-    log_entries = []
-    process_limit = 100  # TODO choose a good limit and extract value to config file
-
-    def __init__(self, file):
-        self.file = file
+    log_entries = Queue(100)  # TODO choose a good limit and extract value to config file
 
     def add_filter(self, filter_part):
         self.filters.append(filter_part)
@@ -21,9 +18,9 @@ class LogFilter(Filter):
     def process(self):
 
         # verification used to minimize impact of webcrawler fake access
-        if len(self.log_entries) < self.process_limit:
+        if not self.log_entries.full():
             for entry in self.log_entries:
                 for log_filter in self.filters:
                     log_filter.filter(entry)
 
-        self.filters.clear()
+        self.log_entries.clear()
