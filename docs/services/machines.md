@@ -1,7 +1,7 @@
 # Machines
 
-## Add new Admin Setup
-In order to add a new admin, a set of tasks need to be performed, both on the servers side (both machines) and client side (new user)
+## New Admin Setup
+In order to add a new admin, a set of tasks must be performed, both on the server side (both machines) and client side (new user)
 Note that only a sudoer is able to add new admins.
 
 ### Server
@@ -16,13 +16,13 @@ As a sudoer user,
 Run script ```/usr/local/sbin/manageuser.sh``` at eden-fs,
 - ```cd /usr/local/sbin```
 - ```sudo manageuser.sh -c <username>```
-Provide a minimally secure password when requested, during the procedure.
-This password should later be changed by the new user, during it's first access to the machine.
+Provide a minimally secure password when requested.
+This password should later be changed by the new user, during his first access to the machine.
 
 Afterwards, a zip file with the required information for the new user to execute the needed ssh setup at his machine
 will be present at the folder containing the script.
 
-A similar setup now needs to be executed in eden-db.
+A similar setup now must be executed in eden-db.
 Make sure that a public key <username>.pub is present on the same folder where the script is located.
 - ```cd /usr/local/sbin```
 - ```sudo manageuser.sh -u <username>```
@@ -50,7 +50,7 @@ also, your current account password is on the zip's <username> password.txt (wil
 	- if not, ```mkdir .ssh && sudo chmod 700 .ssh```
 - ```cd .ssh```
 - add eden_<username>.priv key to this directory
-- using a text editor, edit/create file "config" and restrict access permitions ```touch config && sudo chmod 600 config```
+- using a text editor, edit/create file "config" and restrict access permissions ```touch config && sudo chmod 600 config```
 - add the following entry:
 ```
 Host eden-fs
@@ -80,13 +80,13 @@ Several utilities are used on both machines in order to assure the best possible
 Given that all scripts were registered using ```crontab -e``` one must take into account that they are run using _sudo_ privileges.
 
 ### Updates
-Located in ```/usr/local/sbin/```, [update.sh](update.sh) is executed by a daily cronjob run at 2 a.m.
-Using apt-get, package lists are update and and fetched. In case of linux headers update, the machine is rebooted in order to complete process. 
+Located in ```/usr/local/sbin/```, [update.sh](update.sh) is executed by a daily cron job run at 2 a.m.
+Using apt-get, package lists are update and and fetched. In case of linux headers update, the machine is rebooted in order to complete the process. 
 
-Usually, eden-db takes longer than eden-fs to update, it may be due to bad update mirror selection, further experimentation is required.
+Usually, eden-db takes longer than eden-fs to update, it may be due to a bad update mirror selection, further experimentation is required.
 
 ### Snapshots
-Located in ```/usr/local/sbin/```, [backup.sh](backup.sh) is executed by cronjob run at the 1st and 15th day of each month, at 4 a.m.
+Located in ```/usr/local/sbin/```, [backup.sh](backup.sh) is executed by cron job run at the 1st and 15th day of each month, at 4 a.m.
 
 In order for the script to work properly, the token needs to be updated monthly directly on the code.
 Okeanos automatically renews the API token monthly and there is no way to automate this update process through code, therefore, an admin needs to update the script by hand.
