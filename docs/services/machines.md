@@ -80,13 +80,13 @@ Several utilities are used on both machines in order to assure the best possible
 Given that all scripts were registered using ```crontab -e``` one must take into account that they are run using _sudo_ privileges.
 
 ### Updates
-Located in ```/usr/local/sbin/```, [update.sh](update.sh) is executed by a daily cron job run at 2 a.m.
+Located in ```/usr/local/sbin/```, [update.sh](update.sh) is executed by a daily cron job run at 2 a.m WEST.
 Using apt-get, package lists are update and and fetched. In case of linux headers update, the machine is rebooted in order to complete the process. 
 
 Usually, eden-db takes longer than eden-fs to update, it may be due to a bad update mirror selection, further experimentation is required.
 
 ### Snapshots
-Located in ```/usr/local/sbin/```, [backup.sh](backup.sh) is executed by cron job run at the 1st and 15th day of each month, at 4 a.m.
+Located in ```/usr/local/sbin/```, [backup.sh](backup.sh) is executed by cron job run at the 1st and 15th day of each month, at 4 a.m WEST.
 
 In order for the script to work properly, the token needs to be updated monthly directly on the code.
 Okeanos automatically renews the API token monthly and there is no way to automate this update process through code, therefore, an admin needs to update the script by hand.
