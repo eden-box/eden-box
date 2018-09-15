@@ -6,7 +6,7 @@ sysadmin knowledge, easily acquirable online.
 
 ## Outline
 The project relies upon two Ubuntu virtual machines, both provided by [Okeanos-Global](./services/okeanos.md).
-Both machines automatically update daily at 2 am, using a cron job running apt-get package manager.  
+Both machines automatically update daily at 2 a.m WEST, using a cron job running apt-get package manager.  
 Additionally, the machines create a snapshot of their current state twice a month (1st and 15th) and upload it to the Okeanos [Pithos](./services/okeanos.md#pithos) service, in order to provide recoverability means in case of severe failure of the VMs.
 Given that Pithos' capacity is limited, these snapshots overwrite older ones so that, at a given time, only 6 distinct snapshots of a machine are stored in the cloud.
 
