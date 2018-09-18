@@ -4,25 +4,38 @@ import time
 from threading import Thread
 from multiprocessing import Pool
 from log_analyser.log_entry_processor import LogEntryProcessor
+from .log_parser_config import LogParserConfig as Config
 
 
 class LogParser:
+    """
+    Parses a log file
 
+    Tails a file and passes added lines to the log filter
+    """
+
+    """active states whether the file is being parsed"""
     active = False
-    __def_sleep = 0.00001
+
+    """default pooling time interval"""
+    __def_sleep = Config.DEFAULT_SLEEP
+
+    """max pooling time interval"""
+    __max_sleep = Config.MAX_SLEEP
 
     def __init__(self, file, log_filter):
 
-        # Configuration
         self.__file = file
         self.__log_filter = log_filter
 
         # Process Pool creation
-        self.__process_pool = Pool(processes=4)  # TODO refactor number of processes and/or move to config file
+        self.__process_pool = Pool(processes=Config.PROCESSES)
 
         # Thread creation
-        thread = Thread(target=self.__run, args=self.__file, daemon=True)  # TODO move this to another place
+        thread = Thread(target=self.__run, args=self.__file, daemon=True)
         thread.start()
+
+        # Blocks until thread stops
         thread.join()
         self.active = False
 
@@ -32,8 +45,8 @@ class LogParser:
 
     def __run(self, file_path):
         """
-        Processes each line fetched from the file
-        :param file_path: log to be parsed and analysed
+        Send each fetched line fetched to process
+        :param file_path: log file to be parsed and analysed
         """
         file = open(file_path)
         lines = self.__tail(file)
@@ -44,7 +57,7 @@ class LogParser:
     def __tail(self, file):
         """
         Periodically fetches a line from the file and yields it
-        :param file: log to be parsed and analysed
+        :param file: log file to be parsed and analysed
         """
 
         file.seek(0, 2)  # go to the end of the file
@@ -52,15 +65,21 @@ class LogParser:
 
         self.active = True
 
+        # reads are less frequent depending on file update frequency
         while self.active:
             line = file.readline()
             if not line:
                 time.sleep(sleep)  # sleep briefly
-                if sleep < 1.0:
+                if sleep < self.__max_sleep:
                     sleep += self.__def_sleep
                 continue
             sleep = self.__def_sleep
             yield line
 
     def __process(self, entry):
+        """
+        Processes an entry
+        Sends the entry to the log pool, to be processed by the LogEntryProcessor
+        :param entry: json entry from the log file
+        """
         self.__process_pool.apply_async(func=LogEntryProcessor.process, args=(self.__log_filter, entry))
