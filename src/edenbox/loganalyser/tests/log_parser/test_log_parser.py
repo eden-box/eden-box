@@ -6,6 +6,14 @@ from log_analyser.log_filter import LogFilter
 from tests.log_parser.tests_config import Config
 
 
+@pytest.fixture(scope="function")
+def default_file(tmpdir):
+    """"
+    Returns a dummy log file
+    """
+    return tmpdir.join(Config.DUMMY_FILE)
+
+
 @pytest.fixture
 def default_log_filter():
     """"
@@ -22,10 +30,7 @@ def default_log_parser():
     return LogParser(Config.DUMMY_FILE, default_log_filter)
 
 
-class TestLogParserSetup:
+class TestLogParser:
 
     def test_dummy_a(self):
-        assert default_log_parser is default_log_parser
-
-    def test_dummy_b(self):
-        assert default_log_filter is not default_log_parser
+        assert default_file is not default_log_parser
