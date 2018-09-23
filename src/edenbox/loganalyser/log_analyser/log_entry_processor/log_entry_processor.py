@@ -23,7 +23,7 @@ class LogEntryProcessor:
 
         data = json.loads(line)
 
-        entry = EntryFactory.get_instance().get_entry(data)  # TODO check if singleton is a good choice here
+        entry = EntryFactory().get_entry(data)
 
         if entry is not None:
             log_filter.filter(entry)
