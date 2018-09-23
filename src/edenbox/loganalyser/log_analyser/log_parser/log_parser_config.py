@@ -6,6 +6,9 @@ class LogParserConfig:
     Log parser configuration
     """
 
+    """log file access mode"""
+    FILE_ACCESS_MODE = 'r'
+
     """log parser default sleep time between readlines"""
     DEFAULT_SLEEP = 0.00001
 

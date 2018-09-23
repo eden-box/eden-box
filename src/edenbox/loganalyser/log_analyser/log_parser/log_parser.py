@@ -5,6 +5,7 @@ from threading import Thread
 from multiprocessing import Pool
 from log_analyser.log_entry_processor import LogEntryProcessor
 from .log_parser_config import LogParserConfig as Config
+from .exceptions import NoLogFileException
 
 
 class LogParser:
@@ -48,11 +49,14 @@ class LogParser:
         Send each fetched line fetched to process
         :param file_path: log file to be parsed and analysed
         """
-        file = open(file_path)
-        lines = self.__tail(file)
+        try:
+            with open(file_path, Config.FILE_ACCESS_MODE) as file:
+                lines = self.__tail(file)
 
-        for line in lines:
-            self.__process(line)
+                for line in lines:
+                    self.__process(line)
+        except IOError as e:
+            raise NoLogFileException(e)
 
     def __tail(self, file):
         """
