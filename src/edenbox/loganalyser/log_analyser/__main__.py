@@ -1,15 +1,15 @@
 #!/usr/bin/env python3.7
 
 import sys
-from .log_filter import LogFilter
 from .log_parser import LogParser
+from .log_filter import LogFilter
 
 
 def main(file_name):
 
-    log_filter = LogFilter()
+    LogParser(file_name, LogFilter())
 
-    LogParser(file_name, log_filter)  # blocks for parsing
+    print("Parsing finished")
 
     exit(0)
 

@@ -1,29 +1,33 @@
 #!/usr/bin/env python3.7
 
-from log_analyser.log_filter import _Filter as Filter
+from queue import Queue
+from asyncio import QueueFull
+from .log_filter_config import LogFilterConfig as Config
 
 
-class LogFilter(Filter):
+class LogFilter:
+    """
+    Stores entry data to be processed
+    """
 
-    filters = []
-    log_entries = []
-    process_limit = 100  # TODO choose a good limit and extract value to config file
+    """log entries to process"""
+    __log_entries = Queue(Config.MAX_QUEUE_SIZE)
 
-    def __init__(self, file):
-        self.file = file
+    def filter(self, entry):
+        """
+        Add entry to processment queue
+        :param entry: entry to process
+        """
 
-    def add_filter(self, filter_part):
-        self.filters.append(filter_part)
+        if not self.__log_entries.full():
+            try:
+                self.__log_entries.put_nowait(entry)
+            except QueueFull:  # when queue is full
+                pass  # TODO handle exception
 
-    def filter(self, log_entry):
-        self.log_entries.append(log_entry)
-
-    def process(self):
-
-        # verification used to minimize impact of webcrawler fake access
-        if len(self.log_entries) < self.process_limit:
-            for entry in self.log_entries:
-                for log_filter in self.filters:
-                    log_filter.filter(entry)
-
-        self.filters.clear()
+    def count(self):
+        """
+        Number of not yet processed log entries
+        :return: number of log entries
+        """
+        return self.__log_entries.qsize()

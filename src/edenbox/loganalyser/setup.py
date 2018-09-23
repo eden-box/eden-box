@@ -33,6 +33,11 @@ setup(
 
     install_requires=['Psycopg2'],
 
+    tests_require=['pytest'],
+
+    extras_require={
+    },
+
     # If there are data files included in your packages that need to be
     # installed, specify them here.
     package_data={
