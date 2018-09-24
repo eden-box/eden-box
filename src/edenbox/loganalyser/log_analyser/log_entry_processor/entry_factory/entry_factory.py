@@ -15,11 +15,15 @@ class EntryFactory(metaclass=Singleton):
 
         self._entry_creators = {}
 
-        # Initialize available entry creators
-        for creator in (
-            # TODO add creators
-        ):
-            creator.register(self)
+            # Initialize available entry creators
+            for creator in (
+                    FileAddedEntryCreator(),
+                    FileRemovedEntryCreator(),
+                    FileRenamedEntryCreator(),
+                    FileModifiedEntryCreator(),
+                    FileAccessEntryCreator()
+            ):
+                creator.register(self)
 
         # self.__default_entry_creator = DefaultEntryCreator()  # used if no matching creator is found
 
