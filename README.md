@@ -1,5 +1,5 @@
 # eden-box
-[![Discord](https://img.shields.io/discord/493769296523034635.svg?style=plastic)](https://discord.gg/Eb5CUZF)
+[![Discord](https://img.shields.io/discord/493769296523034635.svg?style=flat&logo=discord&label=Discord)](https://discord.gg/Eb5CUZF)
 
 Eden Box Project
 
