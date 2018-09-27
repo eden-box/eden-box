@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.7
 
 import re
+from .entry_creators import *
 from log_analyser.common import Singleton
 
 
@@ -16,16 +17,21 @@ class EntryFactory(metaclass=Singleton):
         self._entry_creators = {}
 
         # Initialize available entry creators
+
+        self.__default_entry_creator = DefaultEntryCreator()  # used if no matching creator is found
+
         for creator in (
-            # TODO add creators
+                FileAddedEntryCreator(),
+                FileRemovedEntryCreator(),
+                FileRenamedEntryCreator(),
+                FileModifiedEntryCreator(),
+                FileAccessEntryCreator()
         ):
             creator.register(self)
 
-        # self.__default_entry_creator = DefaultEntryCreator()  # used if no matching creator is found
-
     def register(self, entry_creator_id, entry_creator):
         """
-        Register a entry creator to the factory
+        Register an entry creator to the factory
         :param entry_creator_id: id of the added creator
         :param entry_creator: creator to add
         """
