@@ -1,8 +1,9 @@
 #!/usr/bin/env python3.7
 
-from queue import Queue
-from asyncio import QueueFull
+from threading import Timer
 from .log_filter_config import LogFilterConfig as Config
+from .states import DefaultLogFilterState
+from .log_filter_entry_queue import EntryQueue
 
 
 class LogFilter:
@@ -10,24 +11,47 @@ class LogFilter:
     Stores entry data to be processed
     """
 
+    """log filter state"""
+    __state = None
+
+    """prioritary log entries to process"""
+    prioritary_log_entries = EntryQueue(Config.MAX_QUEUE_SIZE)  # FIXME define size
+
     """log entries to process"""
-    __log_entries = Queue(Config.MAX_QUEUE_SIZE)
+    log_entries = EntryQueue(Config.MAX_QUEUE_SIZE)
+
+    def __init__(self):
+        self.bind_state(DefaultLogFilterState(self))
+        self.__process_timer = Timer(Config.PROCESS_INTERVAL, self.__process)
+        self.__process_timer.start()
+
+    def bind_state(self, state):
+        self.__unbind_state()
+        self.__state = state
+
+    def __unbind_state(self):
+        if self.__state:
+            self.__state.unbind()
+            self.__state = None
 
     def filter(self, entry):
         """
         Add entry to processment queue
         :param entry: entry to process
         """
+        entry.add_to_filter(self)
 
-        if not self.__log_entries.full():
-            try:
-                self.__log_entries.put_nowait(entry)
-            except QueueFull:  # when queue is full
-                pass  # TODO handle exception
+    def filter_default_entry(self, entry):
+        self.__state.add_default_entry(entry)
 
-    def count(self):
-        """
-        Number of not yet processed log entries
-        :return: number of log entries
-        """
-        return self.__log_entries.qsize()
+    def filter_prioritary_entry(self, entry):
+        self.__state.add_prioritary_entry(entry)
+
+    def add_to_default_queue(self, entry):
+        self.log_entries.add(entry)
+
+    def add_to_prioritary_queue(self, entry):
+        self.prioritary_log_entries.add(entry)
+
+    def __process(self):
+        self.__state.process()
