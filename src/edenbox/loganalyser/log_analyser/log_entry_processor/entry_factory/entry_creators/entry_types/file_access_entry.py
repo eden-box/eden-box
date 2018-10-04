@@ -1,12 +1,12 @@
 #!/usr/bin/env python3.7
 
-from .entry import _Entry as Entry
+from .default_entry import _DefaultEntry as DefaultEntry
 
 
-class FileAccessEntry(Entry):
+class FileAccessEntry(DefaultEntry):
     """
     Generated when a file is accessed
     """
 
-    def add_to_filter(self, log_filter):
+    def dispatch(self, db_cursor):
         pass

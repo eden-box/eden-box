@@ -22,7 +22,7 @@ Received json object
 
 class _Entry(metaclass=abc.ABCMeta):
     """
-    More explicit representation of a log file entry
+    Explicit representation of a log file entry
     """
 
     def __init__(self, file, line):
@@ -39,4 +39,17 @@ class _Entry(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def add_to_filter(self, log_filter):
+        """
+        Defines how to add an entry to a filter
+        :param log_filter: filter to which the entry will be added
+        """
+        pass
+
+    @abc.abstractmethod
+    def dispatch(self, db_cursor):
+        """
+        Defines method used to communicate with database
+        :param db_cursor: database cursor
+        """
+        # db_cursor.callproc(‘stored_procedure_name’, (value1,value2))
         pass
