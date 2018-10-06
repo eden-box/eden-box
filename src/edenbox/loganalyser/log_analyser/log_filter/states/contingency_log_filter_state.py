@@ -7,7 +7,9 @@ from .default_log_filter_state import DefaultLogFilterState
 class ContingencyLogFilterState(LogFilterState):
     """
     Defines contingency log filter behavior
-    During contingency, only prioritary entries are added, while default ones are ignored
+
+    During contingency, only high priority entries are added, while default ones are ignored.
+    Only high priority entries are processed.
     """
 
     def add__default_entry(self, entry):
@@ -19,13 +21,18 @@ class ContingencyLogFilterState(LogFilterState):
 
     def add_prioritary_entry(self, entry):
         """
-        Add prioritary entry
-        Entry is added only if queue is not empty
-        :param entry: prioritary entry
+        Add high priority entry
+        :param entry: high priority entry
         """
         self._log_filter.add_to_prioritary_queue(entry)
 
     def process(self):
+        """
+        Process entry queues
+
+        Reset default priority queue and process high priority queue only
+        Revert state back to default
+        """
 
         self._log_filter.log_entries.reset()
 

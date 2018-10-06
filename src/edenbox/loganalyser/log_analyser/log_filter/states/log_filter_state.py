@@ -5,13 +5,18 @@ import abc
 
 class _LogFilterState(metaclass=abc.ABCMeta):
     """
-    Defines log filter behavior
+    Log filter behavior
+    Defines how entries are added to the filter and how they are processed
     """
 
     def __init__(self, log_filter):
         self._log_filter = log_filter
 
     def unbind(self):
+        """
+        Unbinds state
+        Used to assure garbage collection
+        """
         self._log_filter = None
 
     @abc.abstractmethod
@@ -25,9 +30,8 @@ class _LogFilterState(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def add_prioritary_entry(self, entry):
         """
-        Add prioritary entry
-        Entry is added only if queue is not empty
-        :param entry: prioritary entry
+        Add high priority entry
+        :param entry: high priority entry
         """
         pass
 
