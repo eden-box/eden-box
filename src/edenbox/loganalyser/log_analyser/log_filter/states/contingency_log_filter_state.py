@@ -26,6 +26,7 @@ class ContingencyLogFilterState(LogFilterState):
         self._log_filter.add_to_prioritary_queue(entry)
 
     def process(self):
+
         self._log_filter.log_entries.reset()
 
         old_p_queue = self._log_filter.prioritary_log_entries.reset()

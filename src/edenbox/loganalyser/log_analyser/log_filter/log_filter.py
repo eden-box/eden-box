@@ -51,6 +51,7 @@ class LogFilter:
         self.log_entries.add(entry)
 
     def add_to_prioritary_queue(self, entry):
+        self.log_entries.add(entry)
         self.prioritary_log_entries.add(entry)
 
     def __process(self):
