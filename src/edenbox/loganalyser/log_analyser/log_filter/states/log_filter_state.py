@@ -28,7 +28,7 @@ class _LogFilterState(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def add_prioritary_entry(self, entry):
+    def add_high_priority_entry(self, entry):
         """
         Add high priority entry
         :param entry: high priority entry

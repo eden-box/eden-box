@@ -19,12 +19,12 @@ class ContingencyLogFilterState(LogFilterState):
         """
         return
 
-    def add_prioritary_entry(self, entry):
+    def add_high_priority_entry(self, entry):
         """
         Add high priority entry
         :param entry: high priority entry
         """
-        self._log_filter.add_to_prioritary_queue(entry)
+        self._log_filter.add_to_high_priority_queue(entry)
 
     def process(self):
         """
@@ -36,10 +36,10 @@ class ContingencyLogFilterState(LogFilterState):
 
         self._log_filter.log_entries.reset()
 
-        old_p_queue = self._log_filter.prioritary_log_entries.reset()
+        old_p_queue = self._log_filter.high_priority_log_entries.reset()
+
+        self._log_filter.bind_state(DefaultLogFilterState(self._log_filter))  # return to default state
 
         while old_p_queue.qsize() > 0:
             entry = old_p_queue.get()
             entry.dispatch()  # TODO
-
-        self._log_filter.bind_state(DefaultLogFilterState(self._log_filter))  # return to default state

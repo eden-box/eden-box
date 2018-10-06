@@ -5,11 +5,20 @@ from asyncio import QueueFull
 
 
 class EntryQueue:
+    """
+    FIFO Entry queue
+
+    Stores entries to be processed
+    """
 
     def __init__(self, queue_size):
         self.__entries = Queue(queue_size)
 
     def add(self, entry):
+        """
+        Add an entry to the queue
+        :param entry: entry to add
+        """
         if not self.__entries.full():
             try:
                 self.__entries.put_nowait(entry)
@@ -17,18 +26,34 @@ class EntryQueue:
                 pass  # TODO handle exception
 
     def get(self):
+        """
+        Get entry
+        :return: entry
+        """
         try:
             return self.__entries.get_nowait()
         except Empty:
             pass  # TODO decide what to do
 
     def size(self):
+        """
+        Current queue size
+        :return:
+        """
         return self.__entries.qsize()
 
     def max_size(self):
+        """
+        Max queue size
+        :return: max queue size
+        """
         return self.__entries.maxsize
 
     def full(self):
+        """
+        Check if queue is full
+        :return: true if queue is full
+        """
         return self.__entries.full()
 
     def reset(self):

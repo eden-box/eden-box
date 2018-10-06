@@ -14,7 +14,7 @@ class _PrioritaryEntry(Entry):
         Defines how to add a prioritary entry to a filter
         :param log_filter: filter to which the entry will be added
         """
-        log_filter.filter_prioritary_entry(self)
+        log_filter.filter_high_priority_entry(self)
 
     @abc.abstractmethod
     def dispatch(self, db_cursor):

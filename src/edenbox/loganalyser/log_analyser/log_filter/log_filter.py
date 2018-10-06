@@ -22,10 +22,10 @@ class LogFilter:
     __state = None
 
     """log entries"""
-    log_entries = EntryQueue(Config.MAX_QUEUE_SIZE)
+    log_entries = EntryQueue(Config.MAX_DEFAULT_PRIORITY_QUEUE_SIZE)
 
-    """prioritary log entries"""
-    prioritary_log_entries = EntryQueue(Config.MAX_QUEUE_SIZE)  # FIXME define size
+    """high priority log entries"""
+    high_priority_log_entries = EntryQueue(Config.MAX_HIGH_PRIORITY_QUEUE_SIZE)  # FIXME define size
 
     def __init__(self):
         self.bind_state(DefaultLogFilterState(self))
@@ -35,7 +35,7 @@ class LogFilter:
     def bind_state(self, state):
         """
         Binds a given state, unbinding the old one
-        :param state:
+        :param state: state to bind
         """
         self.__unbind_state()
         self.__state = state
@@ -62,12 +62,12 @@ class LogFilter:
         """
         self.__state.add_default_entry(entry)
 
-    def filter_prioritary_entry(self, entry):
+    def filter_high_priority_entry(self, entry):
         """
         Pass a high priority entry to state
         :param entry: high priority entry
         """
-        self.__state.add_prioritary_entry(entry)
+        self.__state.add_high_priority_entry(entry)
 
     def add_to_default_queue(self, entry):
         """
@@ -76,13 +76,12 @@ class LogFilter:
         """
         self.log_entries.add(entry)
 
-    def add_to_prioritary_queue(self, entry):
+    def add_to_high_priority_queue(self, entry):
         """
         Add an entry to high priority queue
         :param entry: entry to add
         """
-        self.log_entries.add(entry)
-        self.prioritary_log_entries.add(entry)
+        self.high_priority_log_entries.add(entry)
 
     def __process(self):
         """
