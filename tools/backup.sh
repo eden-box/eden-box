@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Contants
+# Constants
 
 readonly LINE="================================================================"
 
@@ -30,7 +30,8 @@ fi
 DATE=$(date +'%d-%m-%Y')                                              # current date
 AUTH="<auth_URL>"                                                     # REST API authenticaton URL
 TOKEN="<token>"                                                       # authentication token [URGENT] needs to be updated monthly
-IMAGE="<machine>-Backup-"$VERSION                                     # name of the snapshot to be created
+FOLDER="Eden/<machine>/"                                              # folder where the image will be saved
+IMAGE=$FOLDER"<machine>-Backup-"$VERSION                              # name of the snapshot to be created
 DESCR="<machine_descr> - Backup - "$DATE                              # description of the snapshot to be created
 STARTTIME=$(date +'%X %d-%m-%Y')                                      # time at which the snapshot process started
 
