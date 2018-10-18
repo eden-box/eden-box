@@ -11,7 +11,7 @@ LOGFILE="<log_path>"                                                  # location
 RETRYIN="1h"                                                          # time after which the operation will be retried, in case of error
 
 DAYLIMIT=15                                                           # defines limit value for first half of the month snapshot
-MONTHLIMIT=3                                                          # defines number of months that are stored in snapshots
+MONTHLIMIT=2                                                          # defines number of months that are stored in snapshots
 
 DAY=$(date +'%d')                                                     # actual day
 MONTH=$(date +'%m')                                                   # actual month
