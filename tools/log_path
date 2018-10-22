@@ -1,0 +1,53 @@
+================================================================
+Saving image - Eden/<machine>/<machine>-Backup-0-1
+Starting upload - 18:03:33 22-10-2018
+./backup.sh: line 42: snf-mkimage: command not found
+Error uploading snapshot
+Will retry operation in 1h
+================================================================
+Saving image - Eden/<machine>/<machine>-Backup-0-1
+Starting upload - 18:14:53 22-10-2018
+Getting token from - ./token.txt
+================================================================
+Saving image - Eden/<machine>/<machine>-Backup-0-1
+Starting upload - 18:15:36 22-10-2018
+Getting token from - ./token.txt
+================================================================
+Saving image - Eden/<machine>/<machine>-Backup-0-1
+Starting upload - 18:15:50 22-10-2018
+Getting token from - ./token.txt
+cat: ./token.txt: No such file or directory
+================================================================
+Saving image - Eden/<machine>/<machine>-Backup-0-1
+Starting upload - 18:17:58 22-10-2018
+Token gotten from - ./token.txt
+Got token - 
+./backup.sh: line 45: snf-mkimage: command not found
+Error uploading snapshot
+Will retry operation in 1h
+================================================================
+Saving image - Eden/<machine>/<machine>-Backup-0-1
+Starting upload - 18:20:06 22-10-2018
+Token gotten from - ./token.txt
+Got token - TokenTest
+./backup.sh: line 45: snf-mkimage: command not found
+Error uploading snapshot
+Will retry operation in 1h
+./backup.sh: line 33: TONKENPATH: command not found
+./backup.sh: line 33: TOKENPATH: command not found
+================================================================
+Saving image - Eden/<machine>/<machine>-Backup-0-1
+Starting upload - 18:24:22 22-10-2018
+Token gotten from - ./token.txt
+Got token - TokenTest
+./backup.sh: line 45: snf-mkimage: command not found
+Error uploading snapshot
+Will retry operation in 1h
+================================================================
+Saving image - Eden/<machine>/<machine>-Backup-0-1
+Starting upload - 18:25:16 22-10-2018
+Token gotten from - ./token.txt
+Got token - TokenTest
+./backup.sh: line 45: snf-mkimage: command not found
+Error uploading snapshot
+Will retry operation in 1h

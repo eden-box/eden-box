@@ -28,8 +28,9 @@ if [ $# -eq 0 ]; then                                                 # if there
 fi
 
 DATE=$(date +'%d-%m-%Y')                                              # current date
-AUTH="<auth_URL>"                                                     # REST API authenticaton URL
-TOKEN="<token>"                                                       # authentication token [URGENT] needs to be updated monthly
+AUTH="<auth_URL>"     
+TOKENPATH="./token.txt"                                                # REST API authenticaton URL
+TOKEN=$(cat $TOKENPATH)                                                       # authentication token [URGENT] needs to be updated monthly
 FOLDER="Eden/<machine>/"                                              # folder where the image will be saved
 IMAGE=$FOLDER"<machine>-Backup-"$VERSION                              # name of the snapshot to be created
 DESCR="<machine_descr> - Backup - "$DATE                              # description of the snapshot to be created
@@ -38,6 +39,8 @@ STARTTIME=$(date +'%X %d-%m-%Y')                                      # time at 
 echo $LINE
 echo "Saving image - "$IMAGE
 echo "Starting upload - "$STARTTIME
+echo "Token gotten from - "$TOKENPATH
+echo "Got token - "$TOKEN
 
 until snf-mkimage / -u $IMAGE.diskdump -r "$DESCR" \
 -a $AUTH -t $TOKEN \
@@ -50,6 +53,7 @@ until snf-mkimage / -u $IMAGE.diskdump -r "$DESCR" \
 # force will overwrite any snapshot with the same name
 
 do
+  TOKEN=$(cat $TOKENPATH)  
   echo "Error uploading snapshot"
   echo "Will retry operation in "$RETRYIN
     sleep $RETRYIN
