@@ -41,3 +41,12 @@ class _LogFilterState(metaclass=abc.ABCMeta):
         Process entry queues
         """
         pass
+
+    def _dispatch_queue(self, queue):
+        """
+        Dispatches queue entries to a database connector
+        :param queue: queue to be dispatched
+        """
+        while queue.qsize() > 0:
+            entry = queue.get()
+            entry.dispatch()  # TODO

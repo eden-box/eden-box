@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.7
 
-from queue import Queue, Empty
-from asyncio import QueueFull
+from queue import Queue, Empty, Full
+from .exceptions import FullQueueException, EmptyQueueException
 
 
 class EntryQueue:
@@ -22,8 +22,8 @@ class EntryQueue:
         if not self.__entries.full():
             try:
                 self.__entries.put_nowait(entry)
-            except QueueFull:  # when queue is full
-                pass  # TODO handle exception
+            except Full:  # when queue is full
+                raise FullQueueException
 
     def get(self):
         """
@@ -32,8 +32,8 @@ class EntryQueue:
         """
         try:
             return self.__entries.get_nowait()
-        except Empty:
-            pass  # TODO decide what to do
+        except Empty: # when queue is empty
+            raise EmptyQueueException
 
     def size(self):
         """

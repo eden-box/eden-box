@@ -2,8 +2,10 @@
 
 from threading import Timer
 from .log_filter_config import LogFilterConfig as Config
-from .states import DefaultLogFilterState
-from .log_filter_entry_queue import EntryQueue
+from .states import DefaultState
+from .entry_queue import EntryQueue
+from .entry_queue.exceptions import FullQueueException
+from .exceptions import FullDefaultException, FullHighException
 
 
 class LogFilter:
@@ -25,10 +27,10 @@ class LogFilter:
     log_entries = EntryQueue(Config.MAX_DEFAULT_PRIORITY_QUEUE_SIZE)
 
     """high priority log entries"""
-    high_priority_log_entries = EntryQueue(Config.MAX_HIGH_PRIORITY_QUEUE_SIZE)  # FIXME define size
+    high_priority_log_entries = EntryQueue(Config.MAX_HIGH_PRIORITY_QUEUE_SIZE)
 
     def __init__(self):
-        self.bind_state(DefaultLogFilterState(self))
+        self.bind_state(DefaultState(self))
         self.__process_timer = Timer(Config.PROCESS_INTERVAL, self.__process)
         self.__process_timer.start()
 
@@ -74,14 +76,20 @@ class LogFilter:
         Add an entry to default priority queue
         :param entry: entry to add
         """
-        self.log_entries.add(entry)
+        try:
+            self.log_entries.add(entry)
+        except FullQueueException:
+            raise FullDefaultException
 
     def add_to_high_priority_queue(self, entry):
         """
         Add an entry to high priority queue
         :param entry: entry to add
         """
-        self.high_priority_log_entries.add(entry)
+        try:
+            self.high_priority_log_entries.add(entry)
+        except FullQueueException:
+            raise FullHighException
 
     def __process(self):
         """
