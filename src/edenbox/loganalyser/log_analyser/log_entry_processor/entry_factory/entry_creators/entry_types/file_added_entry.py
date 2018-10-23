@@ -1,12 +1,12 @@
 #!/usr/bin/env python3.7
 
-from .entry import _Entry as Entry
+from .prioritary_entry import _PrioritaryEntry as PrioritaryEntry
 
 
-class FileAddedEntry(Entry):
+class FileAddedEntry(PrioritaryEntry):
     """
     Generated when a file is added
     """
 
-    def add_to_filter(self, log_filter):
+    def dispatch(self, db_cursor):
         pass
