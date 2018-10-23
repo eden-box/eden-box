@@ -44,11 +44,6 @@ class ContingencyState(_LogFilterState):
 
         old_p_queue = self._log_filter.high_priority_log_entries.reset()
 
-        self._log_filter.bind_state(
-            StateFactory.get_state(
-                StateType.DEFAULT,
-                self._log_filter
-            )
-        )  # return to default state
+        self._change_state(StateType.DEFAULT)  # return to default state
 
         self._dispatch_queue(old_p_queue)

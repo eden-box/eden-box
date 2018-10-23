@@ -2,7 +2,7 @@
 
 from threading import Timer
 from .log_filter_config import LogFilterConfig as Config
-from .states import DefaultState
+from .states import StateType, StateFactory
 from .entry_queue import EntryQueue
 from .entry_queue.exceptions import FullQueueException
 from .exceptions import FullDefaultException, FullHighException
@@ -30,7 +30,13 @@ class LogFilter:
     high_priority_log_entries = EntryQueue(Config.MAX_HIGH_PRIORITY_QUEUE_SIZE)
 
     def __init__(self):
-        self.bind_state(DefaultState(self))
+        self.bind_state(
+            StateFactory.get_state(
+                StateType.DEFAULT,
+                self
+            )
+        )
+
         self.__process_timer = Timer(Config.PROCESS_INTERVAL, self.__process)
         self.__process_timer.start()
 

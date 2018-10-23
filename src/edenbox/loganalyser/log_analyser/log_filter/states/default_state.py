@@ -23,12 +23,7 @@ class DefaultState(_LogFilterState):
         try:
             self._log_filter.add_to_default_queue(entry)
         except FullDefaultException:
-            self._log_filter.bind_state(
-                StateFactory.get_state(
-                    StateType.CONTINGENCY,
-                    self._log_filter
-                )
-            )  # enter contingency state
+            self._change_state(StateType.CONTINGENCY)  # enter contingency state
 
     def add_high_priority_entry(self, entry):
         """
@@ -39,12 +34,7 @@ class DefaultState(_LogFilterState):
             self._log_filter.add_to_default_queue(entry)
             self._log_filter.add_to_high_priority_queue(entry)
         except (FullDefaultException, FullHighException):
-            self._log_filter.bind_state(
-                StateFactory.get_state(
-                    StateType.CONTINGENCY,
-                    self._log_filter
-                )
-            )  # enter contingency state
+            self._change_state(StateType.CONTINGENCY)  # enter contingency state
 
             self._log_filter.filter_high_priority_entry(entry)  # delegate choice to log filter
 

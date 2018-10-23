@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.7
 
 import abc
+from .state_factory import *
 
 
 class _LogFilterState(metaclass=abc.ABCMeta):
@@ -18,6 +19,18 @@ class _LogFilterState(metaclass=abc.ABCMeta):
         Used to assure garbage collection
         """
         self._log_filter = None
+
+    def _change_state(self, state_type):
+        """
+        Change state
+        :param state_type: next state type
+        """
+        self._log_filter.bind_state(
+            StateFactory.get_state(
+                    state_type,
+                    self._log_filter
+            )
+        )
 
     @abc.abstractmethod
     def add__default_entry(self, entry):
