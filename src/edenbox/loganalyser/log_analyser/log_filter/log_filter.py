@@ -78,8 +78,8 @@ class LogFilter:
         """
         try:
             self.log_entries.add(entry)
-        except FullQueueException:
-            raise FullDefaultException
+        except FullQueueException as e:
+            raise FullDefaultException(e, "Entry cannot be added, default queue is full")
 
     def add_to_high_priority_queue(self, entry):
         """
@@ -88,8 +88,8 @@ class LogFilter:
         """
         try:
             self.high_priority_log_entries.add(entry)
-        except FullQueueException:
-            raise FullHighException
+        except FullQueueException as e:
+            raise FullHighException(e, "Entry cannot be added, high priority queue is full")
 
     def __process(self):
         """

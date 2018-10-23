@@ -30,5 +30,5 @@ class StateFactory:
             return DefaultState(log_filter)
         elif state_type is StateType.CONTINGENCY:
             return ContingencyState(log_filter)
-        else:
-            raise InvalidStateException  # only raised in case of method usage error, not handled by default
+        else:  # only reached in case of method usage error, exception is not handled by default
+            raise InvalidStateException(state_type, "Unable to return state, state type is invalid")

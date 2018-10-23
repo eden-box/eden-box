@@ -56,7 +56,7 @@ class LogParser:
                 for line in lines:
                     self.__process(line)
         except IOError as e:
-            raise NoLogFileException(e)
+            raise NoLogFileException(e, "Log file does not exist")
 
     def __tail(self, file):
         """

@@ -22,8 +22,8 @@ class EntryQueue:
         if not self.__entries.full():
             try:
                 self.__entries.put_nowait(entry)
-            except Full:  # when queue is full
-                raise FullQueueException
+            except Full as e:  # when queue is full
+                raise FullQueueException(e, "Entry could not be added, queue is full")
 
     def get(self):
         """
@@ -32,8 +32,8 @@ class EntryQueue:
         """
         try:
             return self.__entries.get_nowait()
-        except Empty: # when queue is empty
-            raise EmptyQueueException
+        except Empty as e:  # when queue is empty
+            raise EmptyQueueException(e, "No entry could not be obtained, queue is empty")
 
     def size(self):
         """
