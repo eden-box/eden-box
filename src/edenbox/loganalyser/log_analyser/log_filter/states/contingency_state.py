@@ -1,11 +1,11 @@
 #!/usr/bin/env python3.7
 
-from .log_filter_state import _LogFilterState as LogFilterState
-from .default_state import DefaultState
+from .log_filter_state import _LogFilterState
+from .state_factory import *
 from ..exceptions import FullHighException
 
 
-class ContingencyState(LogFilterState):
+class ContingencyState(_LogFilterState):
     """
     Defines contingency log filter behavior
 
@@ -28,7 +28,9 @@ class ContingencyState(LogFilterState):
         try:
             self._log_filter.add_to_high_priority_queue(entry)
         except FullHighException:
-            pass  # TODO
+            old_p_queue = self._log_filter.high_priority_log_entries.reset()
+
+            self._dispatch_queue(old_p_queue)
 
     def process(self):
         """
@@ -42,6 +44,11 @@ class ContingencyState(LogFilterState):
 
         old_p_queue = self._log_filter.high_priority_log_entries.reset()
 
-        self._log_filter.bind_state(DefaultState(self._log_filter))  # return to default state
+        self._log_filter.bind_state(
+            StateFactory.get_state(
+                StateType.DEFAULT,
+                self._log_filter
+            )
+        )  # return to default state
 
         self._dispatch_queue(old_p_queue)
