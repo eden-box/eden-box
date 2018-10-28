@@ -1,8 +1,19 @@
 #!/usr/bin/env bash
 
-# Contants
+# Constants
 
 readonly LINE="================================================================"
+
+# Functions
+
+# function to obtain a token from file
+# newlines and spaces are trimmed
+# $1 - path to file containing the token
+get_token()
+{
+    local token=$(cat $1 | tr -d "[:space:]")
+    echo $token
+}
 
 # Script
 
@@ -11,7 +22,7 @@ LOGFILE="<log_path>"                                                  # location
 RETRYIN="1h"                                                          # time after which the operation will be retried, in case of error
 
 DAYLIMIT=15                                                           # defines limit value for first half of the month snapshot
-MONTHLIMIT=3                                                          # defines number of months that are stored in snapshots
+MONTHLIMIT=2                                                          # defines number of months that are stored in snapshots
 
 DAY=$(date +'%d')                                                     # actual day
 MONTH=$(date +'%m')                                                   # actual month
@@ -28,9 +39,11 @@ if [ $# -eq 0 ]; then                                                 # if there
 fi
 
 DATE=$(date +'%d-%m-%Y')                                              # current date
-AUTH="<auth_URL>"                                                     # REST API authenticaton URL
-TOKEN="<token>"                                                       # authentication token [URGENT] needs to be updated monthly
-IMAGE="<machine>-Backup-"$VERSION                                     # name of the snapshot to be created
+AUTH="<auth_URL>"                                                     # REST API authentication URL
+TOKENPATH="<token_path>"                                              # path to file containing the authentication token
+TOKEN=$(get_token $TOKENPATH)                                         # authentication token
+FOLDER="Eden/<machine>/"                                              # folder where the image will be saved
+IMAGE=$FOLDER"<machine>-Backup-"$VERSION                              # name of the snapshot to be created
 DESCR="<machine_descr> - Backup - "$DATE                              # description of the snapshot to be created
 STARTTIME=$(date +'%X %d-%m-%Y')                                      # time at which the snapshot process started
 
@@ -52,6 +65,7 @@ do
   echo "Error uploading snapshot"
   echo "Will retry operation in "$RETRYIN
     sleep $RETRYIN
+    TOKEN=$(get_token $TOKENPATH)
     echo $LINE
     echo "Restarting - "$(date +'%X %d-%m-%Y')
   done
@@ -59,5 +73,5 @@ do
   ENDTIME=$(date +'%X %d-%m-%Y')                                      # time at which the snapshot process ended
   echo "Upload finished - "$ENDTIME
   echo $LINE
-  echo ""
+  echo
   ) |& tee -a "$LOGFILE"                                              # output is both sent to stdout and log file
