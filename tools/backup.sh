@@ -4,6 +4,17 @@
 
 readonly LINE="================================================================"
 
+# Functions
+
+# function to obtain a token from file
+# newlines and spaces are trimmed
+# $1 - path to file containing the token
+get_token()
+{
+    local token=$(cat $1 | tr -d "[:space:]")
+    echo $token
+}
+
 # Script
 
 LOGFILE="<log_path>"                                                  # location of the log file to which the output will be sent
@@ -28,9 +39,9 @@ if [ $# -eq 0 ]; then                                                 # if there
 fi
 
 DATE=$(date +'%d-%m-%Y')                                              # current date
-AUTH="<auth_URL>"     
-TOKENPATH="./token.txt"                                                # REST API authenticaton URL
-TOKEN=$(cat $TOKENPATH)                                                       # authentication token [URGENT] needs to be updated monthly
+AUTH="<auth_URL>"                                                     # REST API authentication URL
+TOKENPATH="<token_path>"                                              # path to file containing the authentication token
+TOKEN=$(get_token $TOKENPATH)                                         # authentication token
 FOLDER="Eden/<machine>/"                                              # folder where the image will be saved
 IMAGE=$FOLDER"<machine>-Backup-"$VERSION                              # name of the snapshot to be created
 DESCR="<machine_descr> - Backup - "$DATE                              # description of the snapshot to be created
@@ -39,8 +50,6 @@ STARTTIME=$(date +'%X %d-%m-%Y')                                      # time at 
 echo $LINE
 echo "Saving image - "$IMAGE
 echo "Starting upload - "$STARTTIME
-echo "Token gotten from - "$TOKENPATH
-echo "Got token - "$TOKEN
 
 until snf-mkimage / -u $IMAGE.diskdump -r "$DESCR" \
 -a $AUTH -t $TOKEN \
@@ -53,10 +62,10 @@ until snf-mkimage / -u $IMAGE.diskdump -r "$DESCR" \
 # force will overwrite any snapshot with the same name
 
 do
-  TOKEN=$(cat $TOKENPATH)  
   echo "Error uploading snapshot"
   echo "Will retry operation in "$RETRYIN
     sleep $RETRYIN
+    TOKEN=$(get_token $TOKENPATH)
     echo $LINE
     echo "Restarting - "$(date +'%X %d-%m-%Y')
   done
@@ -64,5 +73,5 @@ do
   ENDTIME=$(date +'%X %d-%m-%Y')                                      # time at which the snapshot process ended
   echo "Upload finished - "$ENDTIME
   echo $LINE
-  echo ""
+  echo
   ) |& tee -a "$LOGFILE"                                              # output is both sent to stdout and log file
