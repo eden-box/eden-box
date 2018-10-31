@@ -3,7 +3,7 @@
 from concurrent.futures import ThreadPoolExecutor
 from psycopg2 import pool, DatabaseError
 from .database_connector_config import DatabaseConnectorConfig as Config
-from .exceptions import FailedConnectionException
+from .exceptions import FailedConnectionException, ConnectionPoolException
 
 
 class DatabaseConnector:
@@ -67,9 +67,10 @@ class DatabaseConnector:
                 entry.dispatch(cur)
                 conn.commit()
             cur.close()
-
-        except FailedConnectionException as e:
-            raise e
+        except pool.PoolError as e:
+            raise ConnectionPoolException(e, "Unable to obtain connection from pool")
+        except DatabaseError as e:
+            raise FailedConnectionException(e, "Failed to obtain connection to database")
         finally:
             if conn is not None:
                 self.__put_connection(conn)
