@@ -3,11 +3,14 @@
 import sys
 from .log_parser import LogParser
 from .log_filter import LogFilter
+from .database_connector import DatabaseConnector
 
 
 def main(file_name):
 
-    LogParser(file_name, LogFilter())
+    db_connector = DatabaseConnector()
+
+    LogParser(file_name, LogFilter(db_connector))
 
     print("Parsing finished")
 

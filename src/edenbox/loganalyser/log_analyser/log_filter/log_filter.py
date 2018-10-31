@@ -20,6 +20,9 @@ class LogFilter:
     After contingency is over, the state returns to the default one, processing all entries.
     """
 
+    """database connection manager"""
+    database_connector = None
+
     """log filter state"""
     __state = None
 
@@ -29,13 +32,15 @@ class LogFilter:
     """high priority log entries"""
     high_priority_log_entries = EntryQueue(Config.MAX_HIGH_PRIORITY_QUEUE_SIZE)
 
-    def __init__(self):
+    def __init__(self, db_connector):
         self.bind_state(
             StateFactory.get_state(
                 StateType.DEFAULT,
                 self
             )
         )
+
+        self.database_connector = db_connector
 
         self.__process_timer = Timer(Config.PROCESS_INTERVAL, self.__process)
         self.__process_timer.start()

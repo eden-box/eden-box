@@ -60,6 +60,4 @@ class _LogFilterState(metaclass=abc.ABCMeta):
         Dispatches queue entries to a database connector
         :param queue: queue to be dispatched
         """
-        while queue.qsize() > 0:
-            entry = queue.get()
-            entry.dispatch()  # TODO
+        self._log_filter.database_connector.dispatch(queue)

@@ -8,5 +8,7 @@ class FileAccessEntry(DefaultEntry):
     Generated when a file is accessed
     """
 
+    __procedure = "file_accessed"
+
     def dispatch(self, db_cursor):
-        pass
+        db_cursor.callproc(self.__procedure, (self.file, self.time))

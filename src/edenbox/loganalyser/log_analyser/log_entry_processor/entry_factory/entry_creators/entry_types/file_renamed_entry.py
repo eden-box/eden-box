@@ -8,5 +8,7 @@ class FileRenamedEntry(PrioritaryEntry):
     Generated when a file is renamed
     """
 
+    __procedure = "file_renamed"
+
     def dispatch(self, db_cursor):
-        pass
+        db_cursor.callproc(self.__procedure, (self.file, self.time))
