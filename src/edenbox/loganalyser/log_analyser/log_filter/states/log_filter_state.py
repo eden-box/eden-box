@@ -2,6 +2,7 @@
 
 import abc
 from .state_factory import *
+from log_analyser.database_connector.exceptions import DatabaseConnectorException
 
 
 class _LogFilterState(metaclass=abc.ABCMeta):
@@ -60,6 +61,7 @@ class _LogFilterState(metaclass=abc.ABCMeta):
         Dispatches queue entries to a database connector
         :param queue: queue to be dispatched
         """
-        while queue.qsize() > 0:
-            entry = queue.get()
-            entry.dispatch()  # TODO
+        try:
+            self._log_filter.database_connector.dispatch(queue)
+        except DatabaseConnectorException as e:
+            pass  # TODO log exception
