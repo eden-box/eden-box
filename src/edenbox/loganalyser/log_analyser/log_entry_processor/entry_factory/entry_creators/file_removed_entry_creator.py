@@ -11,5 +11,5 @@ class FileRemovedEntryCreator(EntryCreator):
 
     _identifier = "File deleted"
 
-    def _return_entry(self, file, json_line):
-        return FileRemovedEntry(file, json_line)
+    def _return_entry(self, operation, json_line):
+        return FileRemovedEntry(operation, json_line)

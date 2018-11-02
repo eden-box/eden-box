@@ -25,9 +25,17 @@ class _Entry(metaclass=abc.ABCMeta):
     Explicit representation of a log file entry
     """
 
-    def __init__(self, file, line):
-        self.file = file
+    def __init__(self, operation, line):
+        self.operation = operation
+        self._process_operation(operation)
         self.__process_json_entry(line)
+
+    def _process_operation(self, operation):
+        """
+        Extracts data from operation
+        :param operation: operation information
+        """
+        self.file = operation
 
     def __process_json_entry(self, json_entry):
         """
@@ -51,5 +59,4 @@ class _Entry(metaclass=abc.ABCMeta):
         Defines method used to communicate with database
         :param db_cursor: database cursor
         """
-        # db_cursor.callproc(‘stored_procedure_name’, (value1,value2))
         pass

@@ -11,5 +11,5 @@ class FileAddedEntryCreator(EntryCreator):
 
     _identifier = "File created"
 
-    def _return_entry(self, file, json_line):
-        return FileAddedEntry(file, json_line)
+    def _return_entry(self, operation, json_line):
+        return FileAddedEntry(operation, json_line)

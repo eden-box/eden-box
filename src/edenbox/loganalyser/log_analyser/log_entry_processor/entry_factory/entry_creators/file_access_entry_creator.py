@@ -11,5 +11,5 @@ class FileAccessEntryCreator(EntryCreator):
 
     _identifier = "File accessed"
 
-    def _return_entry(self, file, json_line):
-        return FileAccessEntry(file, json_line)
+    def _return_entry(self, operation, json_line):
+        return FileAccessEntry(operation, json_line)
