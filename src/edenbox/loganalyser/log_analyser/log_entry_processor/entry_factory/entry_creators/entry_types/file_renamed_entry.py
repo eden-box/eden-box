@@ -12,7 +12,7 @@ class FileRenamedEntry(PrioritaryEntry):
     __procedure = "file_renamed"
 
     def _process_operation(self, operation):
-        args = re.match(r'"(.*)" to "(.*)"', operation, re.M)
+        args = re.match(r'(.*) to "(.*)"', operation, re.M)
         self.old_file = args.group(1)
         self.new_file = args.group(2)
 

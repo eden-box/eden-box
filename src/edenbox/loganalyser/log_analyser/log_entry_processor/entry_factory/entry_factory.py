@@ -14,7 +14,7 @@ class EntryFactory(metaclass=Singleton):
 
     def __init__(self):
 
-        self.__matcher = re.compile(r'(.*): (.*)')
+        self.__matcher = re.compile(r'(.*?): (.*)')
 
         self._entry_creators = {}
 
@@ -45,8 +45,12 @@ class EntryFactory(metaclass=Singleton):
         :param json_line: json object of the log entry
         :return: created entry object
         """
-        json_line = json_line.message.replace('\\', "")  # remove all backslashes
+        json_line = json_line.message.replace('\\', '')  # remove all backslashes
+        json_line = json_line.replace('"', '', 2)  # remove first 2 "
         args = self.__matcher.match(json_line, re.M)
+
+        if args is None:  # if no match was found
+            return None
 
         # action = args.group(1)
         # operation = args.group(2)
