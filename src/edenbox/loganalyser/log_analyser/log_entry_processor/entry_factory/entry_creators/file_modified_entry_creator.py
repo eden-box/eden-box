@@ -11,5 +11,5 @@ class FileModifiedEntryCreator(EntryCreator):
 
     _identifier = "File updated"
 
-    def _return_entry(self, file, json_line):
-        return FileModifiedEntry(file, json_line)
+    def _return_entry(self, operation, json_line):
+        return FileModifiedEntry(operation, json_line)

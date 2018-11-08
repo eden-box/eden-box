@@ -11,5 +11,5 @@ class FileRenamedEntryCreator(EntryCreator):
 
     _identifier = "File renamed"
 
-    def _return_entry(self, file, json_line):
-        return FileRenamedEntry(file, json_line)
+    def _return_entry(self, operation, json_line):
+        return FileRenamedEntry(operation, json_line)

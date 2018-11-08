@@ -23,20 +23,20 @@ class _EntryCreator(metaclass=abc.ABCMeta):
         """
         entry_factory.register(self._identifier, self)
 
-    def create(self, file, json_line):
+    def create(self, operation, json_line):
         """
         Create entry object
-        :param file: file to which the action refers to
+        :param operation: operation to which the action refers to
         :param json_line: json entry from the log file
         :return: entry object
         """
-        return self._return_entry(file, json_line)
+        return self._return_entry(operation, json_line)
 
     @abc.abstractmethod
-    def _return_entry(self, file, json_line):
+    def _return_entry(self, operation, json_line):
         """
         Returns entry object of a specific type
-        :param file: file to which the action refers to
+        :param operation: operation to which the action refers to
         :param json_line: json entry from the log file
         :return: entry object
         """

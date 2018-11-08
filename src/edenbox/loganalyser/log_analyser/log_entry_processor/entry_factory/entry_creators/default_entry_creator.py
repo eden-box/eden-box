@@ -11,5 +11,5 @@ class DefaultEntryCreator(EntryCreator):
 
     _identifier = "Default"
 
-    def _return_entry(self, file, json_line):
+    def _return_entry(self, operation, json_line):
         pass
