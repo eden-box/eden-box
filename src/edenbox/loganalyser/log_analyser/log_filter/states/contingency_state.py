@@ -13,7 +13,7 @@ class ContingencyState(_LogFilterState):
     Only high priority entries are processed.
     """
 
-    def add__default_entry(self, entry):
+    def add_default_entry(self, entry):
         """
         Add default priority entry
         :param entry: default priority entry
