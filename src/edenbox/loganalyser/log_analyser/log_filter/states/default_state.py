@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.7
 
+import logging
 from .log_filter_state import _LogFilterState
 from .state_factory import *
 from ..exceptions import FullDefaultException, FullHighException
@@ -15,7 +16,7 @@ class DefaultState(_LogFilterState):
     Temporal coherency of the events is assured, even if contingency measures are enforced.
     """
 
-    def add__default_entry(self, entry):
+    def add_default_entry(self, entry):
         """
         Add default priority entry
         :param entry: default priority entry
