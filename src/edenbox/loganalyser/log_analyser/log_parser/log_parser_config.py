@@ -1,19 +1,28 @@
 #!/usr/bin/env python3.7
 
+from pkg_resources import resource_filename
+from log_analyser.common.configuration.config import Config
 
-class LogParserConfig:
+
+class LogParserConfig(Config):
     """
-    Log parser configuration
+    Log parser configuration wrapper
     """
 
-    """log file access mode"""
-    FILE_ACCESS_MODE = 'r'
+    _file_path = resource_filename(__name__, "config.yaml")
 
-    """log parser default sleep time between readlines"""
-    DEFAULT_SLEEP = 0.00001
+    @property
+    def file_access_mode(self):
+        return self.get_property("file_access_mode")
 
-    """log parser max sleep time between readlines, reached when file updates are less frequent"""
-    MAX_SLEEP = 1.0
+    @property
+    def default_sleep(self):
+        return self.get_property("default_sleep")
 
-    """process pool size"""
-    PROCESSES = 4  # TODO refactor number of processes
+    @property
+    def max_sleep(self):
+        return self.get_property("max_sleep")
+
+    @property
+    def processes(self):
+        return self.get_property("processes")

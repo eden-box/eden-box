@@ -31,7 +31,7 @@ setup(
 
     packages=find_packages(exclude=['docs', 'tests']),
 
-    install_requires=['Psycopg2'],
+    install_requires=['PyYAML', 'Psycopg2'],
 
     tests_require=['pytest'],
 

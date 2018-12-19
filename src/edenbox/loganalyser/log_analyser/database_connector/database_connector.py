@@ -14,18 +14,18 @@ class DatabaseConnector:
 
     def __init__(self):
 
-        self.__thread_pool = ThreadPoolExecutor(max_workers=Config.MAX_WORKERS)
+        self.__thread_pool = ThreadPoolExecutor(max_workers=Config.max_workers)
 
         try:
             self.__connection_pool = pool.ThreadedConnectionPool(
-                minconn=Config.MIN_CONNECTIONS,
-                maxconn=Config.MAX_CONNECTIONS,
-                host=Config.HOST,
-                port=Config.PORT,
-                database=Config.DATABASE,
-                user=Config.USER,
-                sslmode=Config.SSL_MODE,
-                connect_timeout=Config.TIMEOUT
+                minconn=Config.min_connections,
+                maxconn=Config.max_connections,
+                host=Config.host,
+                port=Config.port,
+                database=Config.database,
+                user=Config.user,
+                sslmode=Config.ssl_mode,
+                connect_timeout=Config.timeout
             )
         except DatabaseError as e:
             raise FailedConnectionException(e, "Failed to establish connection to database")

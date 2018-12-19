@@ -1,21 +1,24 @@
 #!/usr/bin/env python3.7
 
-import sys
+import logging.config
 from .log_filter import LogFilter
 from .log_parser import LogParser
 from .database_connector import DatabaseConnector
 
 
-def main(file_name):
+class LogAnalyser:
 
-    db_connector = DatabaseConnector()
+    def __init__(self, file_name):
 
-    log_filter = LogFilter(db_connector)
+        self.file_name = file_name
 
-    LogParser(file_name, log_filter)  # blocks for parsing
+        self.db_connector = DatabaseConnector()
+        self.log_filter = LogFilter(self.db_connector)
 
-    exit(0)
+    def run(self):
 
+        self.logger.info("Starting Log Analyser")
 
-if __name__ == "__main__":
-    sys.exit(main(sys.argv[1]))
+        LogParser(self.file_name, self.log_filter)  # blocks for parsing
+
+        self.logger.info("Exiting Log Analyser")

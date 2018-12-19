@@ -1,34 +1,48 @@
 #!/usr/bin/env python3.7
 
+from pkg_resources import resource_filename
+from log_analyser.common.configuration.config import Config
 
-class DatabaseConnectorConfig:
+
+class DatabaseConnectorConfig(Config):
     """
-    Database Connector configuration
+    Database connector configuration wrapper
     """
 
-    """max threads used by thread pool"""
-    MAX_WORKERS = 4  # TODO configure
+    _file_path = resource_filename(__name__, "config.yaml")
 
-    "minimum number of connections in the connection pool"
-    MIN_CONNECTIONS = 1  # TODO configure
+    @property
+    def max_workers(self):
+        return self.get_property("max_workers")
 
-    "maximum number of connections in the connection pool"
-    MAX_CONNECTIONS = 4  # TODO configure
+    @property
+    def min_connections(self):
+        return self.get_property("min_connections")
 
-    """host where database is located"""
-    HOST = "<host>"  # TODO configure
+    @property
+    def max_connections(self):
+        return self.get_property("max_connections")
 
-    """host port to connect to"""
-    PORT = "<port>"  # TODO configure
+    @property
+    def host(self):
+        return self.get_property("host")
 
-    """database to use"""
-    DATABASE = "<database>"  # TODO configure
+    @property
+    def port(self):
+        return self.get_property("port")
 
-    """database username"""
-    USER = "<user>"  # TODO configure
+    @property
+    def database(self):
+        return self.get_property("database")
 
-    """ssl usage definition"""
-    SSL_MODE = "verify-full"
+    @property
+    def user(self):
+        return self.get_property("user")
 
-    """connection to database timeout, in seconds"""
-    TIMEOUT = 60  # TODO configure
+    @property
+    def ssl_mode(self):
+        return self.get_property("ssl_mode")
+
+    @property
+    def timeout(self):
+        return self.get_property("timeout")
