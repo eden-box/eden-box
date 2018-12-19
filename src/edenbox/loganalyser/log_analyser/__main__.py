@@ -2,20 +2,19 @@
 
 import sys
 from .log_parser import LogParser
-from .log_filter import LogFilter
-from .database_connector import DatabaseConnector
+from pkg_resources import resource_filename
+from .log_analyser_config import LogAnalyserConfig as Config
+from .log_analyser import LogAnalyser
+
+if __name__ == '__main__':
+
+    config_file = resource_filename(__name__, "config.yaml")
 
 
-def main(file_name):
+    log_file_name = sys.argv[1]
 
-    db_connector = DatabaseConnector()
+    log_analyser = LogAnalyser(log_file_name)
 
-    LogParser(file_name, LogFilter(db_connector))
-
-    print("Parsing finished")
+    log_analyser.run()
 
     exit(0)
-
-
-if __name__ == "__main__":
-    sys.exit(main(sys.argv[1]))

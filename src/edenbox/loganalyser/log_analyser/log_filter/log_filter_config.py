@@ -1,16 +1,24 @@
 #!/usr/bin/env python3.7
 
+from pkg_resources import resource_filename
+from log_analyser.common.configuration.config import Config
 
-class LogFilterConfig:
+
+class LogFilterConfig(Config):
     """
-    Log Filter configuration
+    Log filter configuration wrapper
     """
 
-    """max size of the default priority entry queue"""
-    MAX_DEFAULT_PRIORITY_QUEUE_SIZE = 100  # TODO choose a good limit
+    _file_path = resource_filename(__name__, "config.yaml")
 
-    """max size of the high priority entry queue"""
-    MAX_HIGH_PRIORITY_QUEUE_SIZE = 100  # TODO choose a good limit
+    @property
+    def max_default_priority_queue_size(self):
+        return self.get_property("max_default_priority_queue_size")
 
-    """interval between queues processment"""
-    PROCESS_INTERVAL = 60.0  # TODO check if interval is adequate
+    @property
+    def max_high_priority_queue_size(self):
+        return self.get_property("max_high_priority_queue_size")
+
+    @property
+    def process_interval(self):
+        return self.get_property("process_interval")

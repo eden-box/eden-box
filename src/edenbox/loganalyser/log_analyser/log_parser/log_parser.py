@@ -19,10 +19,10 @@ class LogParser:
     active = False
 
     """default pooling time interval"""
-    __def_sleep = Config.DEFAULT_SLEEP
+    __def_sleep = Config.default_sleep
 
     """max pooling time interval"""
-    __max_sleep = Config.MAX_SLEEP
+    __max_sleep = Config.max_sleep
 
     def __init__(self, file, log_filter):
 
@@ -30,7 +30,7 @@ class LogParser:
         self.__log_filter = log_filter
 
         # Process Pool creation
-        self.__process_pool = Pool(processes=Config.PROCESSES)
+        self.__process_pool = Pool(processes=Config.processes)
 
         # Thread creation
         thread = Thread(target=self.__run, args=self.__file, daemon=True)
@@ -50,7 +50,7 @@ class LogParser:
         :param file_path: log file to be parsed and analysed
         """
         try:
-            with open(file_path, Config.FILE_ACCESS_MODE) as file:
+            with open(file=file_path, mode=Config.file_access_mode) as file:
                 lines = self.__tail(file)
 
                 for line in lines:
