@@ -2,12 +2,12 @@
 ---
 APP:
   file_access_mode: "r" # log file access mode
-  defualt_sleep: 0.00001 # log parser default sleep time between readlines
+  default_sleep: 0.00001 # log parser default sleep time between readlines
   max_sleep: 1.0 # log parser max sleep time between readlines, reached when file updates are less frequent
   processes: 4 # TODO configure
 TEST:
   file_access_mode: "r" # log file access mode
-  defualt_sleep: 0.00001 # log parser default sleep time between readlines
+  default_sleep: 0.00001 # log parser default sleep time between readlines
   max_sleep: 1.0 # log parser max sleep time between readlines, reached when file updates are less frequent
   processes: 4 # TODO configure
 ...
