@@ -1,6 +1,6 @@
 %YAML 1.2
 ---
-APP:
+app:
   max_workers: 4 # max threads used by thread pool TODO configure
   min_connections: 1 # minimum number of connections in the connection pool TODO configure
   max_connections: 4 # maximum number of connections in the connection pool TODO configure
@@ -10,7 +10,7 @@ APP:
   user: "<user>" # database username TODO configure
   ssl_mode: "verify-full" # ssl usage definition TODO configure
   timeout: 60 # connection to database timeout, in seconds TODO configure
-TEST:
+test:
   max_workers: 4 # max threads used by thread pool TODO configure
   min_connections: 1 # minimum number of connections in the connection pool TODO configure
   max_connections: 4 # maximum number of connections in the connection pool TODO configure

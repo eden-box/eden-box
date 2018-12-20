@@ -14,9 +14,9 @@ class Config:
         config = self.load_config(self._file_path)
 
         if test:
-            self._config = config.get("TEST")
+            self._config = config.get("test")
         else:
-            self._config = config.get("APP")
+            self._config = config.get("app")
 
     @property
     @abc.abstractmethod
