@@ -1,10 +1,10 @@
 %YAML 1.2
 ---
-APP:
+app:
   max_default_priority_queue_size: 100 # max size of the default priority entry queue TODO choose a good limit
   max_high_priority_queue_size: 100 # max size of the high priority entry queue TODO choose a good limit
   process_interval: 60.0 # interval between queues processment TODO choose a good limit
-TEST:
+test:
   max_default_priority_queue_size: 100 # max size of the default priority entry queue TODO choose a good limit
   max_high_priority_queue_size: 100 # max size of the high priority entry queue TODO choose a good limit
   process_interval: 60.0 # interval between queues processment TODO choose a good limit
