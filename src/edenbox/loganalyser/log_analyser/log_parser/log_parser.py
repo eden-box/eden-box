@@ -46,7 +46,7 @@ class LogParser:
 
     def __run(self, file_path):
         """
-        Send each fetched line fetched to process
+        Send each fetched line to process
         :param file_path: log file to be parsed and analysed
         """
         try:
