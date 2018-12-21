@@ -21,7 +21,7 @@ setup(
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Log Parsing Tool',
 
-        # choose license TODO add project license
+        # TODO choose project license
         'License :: OSI Approved :: MIT License',
 
         'Programming Language :: Python :: 3.7',
@@ -41,7 +41,6 @@ setup(
     # If there are data files included in your packages that need to be
     # installed, specify them here.
     package_data={
-        'db-config': ['db-config.py'],
     },
 
     # To provide executable scripts, use entry points in preference to the

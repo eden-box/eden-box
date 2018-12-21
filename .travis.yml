@@ -23,7 +23,7 @@ before_install: cd src/edenbox/loganalyser
 
 # command to install dependencies
 install:
-  - python setup.py install
+  - python -m pip install -r requirements.txt
 
 # command to run tests
 script:
