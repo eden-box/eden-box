@@ -42,7 +42,7 @@ class LogFilter:
 
         self.database_connector = db_connector
 
-        self.__process_timer = Timer(Config.process_interval, self.__process)
+        self.__process_timer = Timer(interval=Config.process_interval, function=self.__process)
         self.__process_timer.start()
 
     def bind_state(self, state):

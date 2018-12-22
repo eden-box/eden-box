@@ -5,6 +5,8 @@ from .log_filter_state import _LogFilterState
 from .state_factory import *
 from ..exceptions import FullDefaultException, FullHighException
 
+logger = logging.getLogger(__name__)
+
 
 class DefaultState(_LogFilterState):
     """
@@ -22,8 +24,10 @@ class DefaultState(_LogFilterState):
         :param entry: default priority entry
         """
         try:
+            logger.debug("Add default priority entry")
             self._log_filter.add_to_default_queue(entry)
         except FullDefaultException:
+            logger.info("Enter Contingency state")
             self._change_state(StateType.CONTINGENCY)  # enter contingency state
 
     def add_high_priority_entry(self, entry):
@@ -32,9 +36,11 @@ class DefaultState(_LogFilterState):
         :param entry: high priority entry
         """
         try:
+            logger.debug("Add high priority entry")
             self._log_filter.add_to_default_queue(entry)
             self._log_filter.add_to_high_priority_queue(entry)
         except (FullDefaultException, FullHighException):
+            logger.info("Enter Contingency state")
             self._change_state(StateType.CONTINGENCY)  # enter contingency state
 
             self._log_filter.filter_high_priority_entry(entry)  # delegate choice to log filter
@@ -50,4 +56,5 @@ class DefaultState(_LogFilterState):
 
         old_queue = self._log_filter.log_entries.reset()
 
+        logger.debug("Process Queue")
         self._dispatch_queue(old_queue)
