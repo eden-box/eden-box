@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 app:
-  logging_file: "<file_path>"
+  log_file: "<file_path>"
 test:
-  logging_file: "/tmp/dummy_log.txt"
+  log_file: "/tmp/dummy_log.txt"
 ...

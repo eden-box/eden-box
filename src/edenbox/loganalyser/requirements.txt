@@ -1,2 +1,2 @@
 PyYAML==3.13
-Psycopg2==2.7.5
+Psycopg2==2.7.6.1
