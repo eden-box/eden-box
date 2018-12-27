@@ -12,6 +12,7 @@ usage ()
     echo "OPTIONS - only one can be used, only the leftmost argument will be used"
     echo "-c Creates user with <username>, creates and sets up ssh access scheme"
     echo "-u Creates user with <username> and sets up ssh access with key ./<username>.pub"
+    echo "-d Deletes user with <username>"
     exit 1
 }
 
