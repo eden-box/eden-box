@@ -1,39 +1,41 @@
 %YAML 1.2
 ---
-version: 1
-disable_existing_loggers: true,
-formatters:
-  brief:
-    format: "%(levelname)-8s; %(name)-12s; %(message)s"
-  simple:
-    format: "%(asctime)s - %(name)-12s - %(levelname)-8s - %(message)s"
-  m_process:
-    format: "%(levelname)-8s; [%(process)d]; %(name)-15s; %(module)s:%(funcName)s;%(lineno)d: %(message)s"
-  m_thread:
-    format: "%(levelname)-8s; %(threadName)s; %(name)-15s; %(module)s:%(funcName)s;%(lineno)d: %(message)s"
-  verbose:
-    format: "%(levelname)-8s; [%(process)d]; %(threadName)s; %(name)-15s; %(module)s:%(funcName)s;%(lineno)d: %(message)s"
-handlers:
-  console:
-    class: logging.StreamHandler
-    level: DEBUG
-    formatter: simple
-  file:
-    level: INFO,
-    class: logging.handlers.TimedRotatingFileHandler,
-    formatter: simple,
-    filename: <logfile_path>,                           # TODO define
-    when: W6,                                           # rotate on sundays
-    atTime:
-    backupCount: 8,                                     # keep last 8 log files
-    encoding: utf-8,
-    utc: true
-loggers:
-  simple:
-    level: DEBUG
-    handlers: [console]
-    propagate: no
-root:
-  level: INFO
-  handlers: [file]
+app,test:
+  log_config:
+    version: 1
+    disable_existing_loggers: true,
+    formatters:
+      brief:
+        format: "%(levelname)-8s; %(name)-12s; %(message)s"
+      simple:
+        format: "%(asctime)s - %(name)-12s - %(levelname)-8s - %(message)s"
+      m_process:
+        format: "%(levelname)-8s; [%(process)d]; %(name)-15s; %(module)s:%(funcName)s;%(lineno)d: %(message)s"
+      m_thread:
+        format: "%(levelname)-8s; %(threadName)s; %(name)-15s; %(module)s:%(funcName)s;%(lineno)d: %(message)s"
+      verbose:
+        format: "%(levelname)-8s; [%(process)d]; %(threadName)s; %(name)-15s; %(module)s:%(funcName)s;%(lineno)d: %(message)s"
+    handlers:
+      console:
+        class: logging.StreamHandler
+        level: DEBUG
+        formatter: simple
+      file:
+        level: INFO,
+        class: logging.handlers.TimedRotatingFileHandler,
+        formatter: simple,
+        filename: <logfile_path>,                           # TODO define
+        when: W6,                                           # rotate on sundays
+        atTime:
+        backupCount: 8,                                     # keep last 8 log files
+        encoding: utf-8,
+        utc: true
+    loggers:
+      simple:
+        level: DEBUG
+        handlers: [console]
+        propagate: no
+    root:
+      level: INFO
+      handlers: [file]
 ...

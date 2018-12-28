@@ -4,45 +4,41 @@ from pkg_resources import resource_filename
 from log_analyser.common.configuration.config import Config
 
 
-class DatabaseConnectorConfig(Config):
+class __DatabaseConnectorConfig(Config):
     """
     Database connector configuration wrapper
     """
 
+    _identifier = __name__
+
     _file_path = resource_filename(__name__, "config.yaml")
 
-    @property
-    def max_workers(self):
+    def max_workers(self) -> int:
         return self.get_property("max_workers")
 
-    @property
-    def min_connections(self):
+    def min_connections(self) -> int:
         return self.get_property("min_connections")
 
-    @property
-    def max_connections(self):
+    def max_connections(self) -> int:
         return self.get_property("max_connections")
 
-    @property
-    def host(self):
+    def host(self) -> str:
         return self.get_property("host")
 
-    @property
-    def port(self):
+    def port(self) -> int:
         return self.get_property("port")
 
-    @property
-    def database(self):
+    def database(self) -> str:
         return self.get_property("database")
 
-    @property
-    def user(self):
+    def user(self) -> str:
         return self.get_property("user")
 
-    @property
-    def ssl_mode(self):
+    def ssl_mode(self) -> str:
         return self.get_property("ssl_mode")
 
-    @property
-    def timeout(self):
+    def timeout(self) -> int:
         return self.get_property("timeout")
+
+
+DatabaseConnectorConfig = __DatabaseConnectorConfig()
