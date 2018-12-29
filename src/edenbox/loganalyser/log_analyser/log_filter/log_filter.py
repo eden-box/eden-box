@@ -27,10 +27,10 @@ class LogFilter:
     __state = None
 
     """log entries"""
-    log_entries = EntryQueue(Config.max_default_priority_queue_size)
+    log_entries = EntryQueue(Config.max_default_priority_queue_size())
 
     """high priority log entries"""
-    high_priority_log_entries = EntryQueue(Config.max_high_priority_queue_size)
+    high_priority_log_entries = EntryQueue(Config.max_high_priority_queue_size())
 
     def __init__(self, db_connector):
         self.bind_state(
@@ -42,7 +42,7 @@ class LogFilter:
 
         self.database_connector = db_connector
 
-        self.__process_timer = Timer(Config.process_interval, self.__process)
+        self.__process_timer = Timer(interval=Config.process_interval(), function=self.__process)
         self.__process_timer.start()
 
     def bind_state(self, state):

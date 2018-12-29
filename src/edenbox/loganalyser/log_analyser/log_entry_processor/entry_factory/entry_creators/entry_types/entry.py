@@ -42,8 +42,8 @@ class _Entry(metaclass=abc.ABCMeta):
         Extracts data from the json entry
         :param json_entry: contains log entry information
         """
-        self.time = json_entry.time
-        self.method = json_entry.method
+        self.time = json_entry["time"]
+        self.method = json_entry["method"]
 
     @abc.abstractmethod
     def add_to_filter(self, log_filter):
