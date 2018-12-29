@@ -33,7 +33,7 @@ setup(
 
     install_requires=['PyYAML', 'Psycopg2'],
 
-    tests_require=['pytest'],
+    tests_require=['pytest', 'mock', 'pytest-mock'],
 
     extras_require={
     },
