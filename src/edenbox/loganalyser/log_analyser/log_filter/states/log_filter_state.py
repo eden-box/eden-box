@@ -1,7 +1,6 @@
 #!/usr/bin/env python3.7
 
 import abc
-from .state_factory import *
 
 
 class _LogFilterState(metaclass=abc.ABCMeta):
@@ -11,7 +10,13 @@ class _LogFilterState(metaclass=abc.ABCMeta):
     """
 
     def __init__(self, log_filter):
+        log_filter.bind_state(self)
         self._log_filter = log_filter
+
+    @property
+    @abc.abstractmethod
+    def identifier(self):
+        pass
 
     def unbind(self):
         """
@@ -24,12 +29,13 @@ class _LogFilterState(metaclass=abc.ABCMeta):
         """
         Change state
         :param state_type: next state type
+        :return: log filter
         """
-        self._log_filter.bind_state(
-            StateFactory.get_state(
-                    state_type,
-                    self._log_filter
-            )
+        from .state_manager import StateManager
+
+        StateManager.register_state(
+            state_type,
+            self._log_filter
         )
 
     @abc.abstractmethod
@@ -60,4 +66,5 @@ class _LogFilterState(metaclass=abc.ABCMeta):
         Dispatches queue entries to a database connector
         :param queue: queue to be dispatched
         """
-        self._log_filter.database_connector.dispatch(queue)
+        if not queue.empty():
+            self._log_filter.database_connector.dispatch(queue)

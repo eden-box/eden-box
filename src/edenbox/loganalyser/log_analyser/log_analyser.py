@@ -7,6 +7,9 @@ from .database_connector import DatabaseConnector
 
 
 class LogAnalyser:
+    """
+    Parses a log file, filtering relevant entries and forwards them to a database
+    """
 
     def __init__(self, file_name):
 
@@ -27,6 +30,10 @@ class LogAnalyser:
         self.logger.info("Log Analyser set up")
 
     def run(self):
+        """
+        Initializes the log analysis
+        Blocks while filtering the log file
+        """
 
         self.logger.info("Starting Log Analyser")
 

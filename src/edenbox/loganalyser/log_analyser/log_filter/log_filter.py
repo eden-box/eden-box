@@ -2,7 +2,7 @@
 
 from threading import Timer
 from .log_filter_config import LogFilterConfig as Config
-from .states import StateType, StateFactory
+from .states import StateType, StateManager
 from .entry_queue import EntryQueue
 from .entry_queue.exceptions import FullQueueException
 from .exceptions import FullDefaultException, FullHighException
@@ -27,22 +27,26 @@ class LogFilter:
     __state = None
 
     """log entries"""
-    log_entries = EntryQueue(Config.max_default_priority_queue_size())
+    log_entries = None
 
     """high priority log entries"""
-    high_priority_log_entries = EntryQueue(Config.max_high_priority_queue_size())
+    high_priority_log_entries = None
 
     def __init__(self, db_connector):
-        self.bind_state(
-            StateFactory.get_state(
-                StateType.DEFAULT,
-                self
-            )
+
+        self.log_entries = EntryQueue(Config.max_default_priority_queue_size())
+
+        self.high_priority_log_entries = EntryQueue(Config.max_high_priority_queue_size())
+
+        StateManager.register_state(
+            StateType.DEFAULT,
+            self
         )
 
         self.database_connector = db_connector
 
         self.__process_timer = Timer(interval=Config.process_interval(), function=self.__process)
+        self.__process_timer.daemon = True
         self.__process_timer.start()
 
     def bind_state(self, state):
@@ -53,13 +57,17 @@ class LogFilter:
         self.__unbind_state()
         self.__state = state
 
+        return self
+
     def __unbind_state(self):
         """
         Unbinds the current state
         """
-        if self.__state:
-            self.__state.unbind()
-            self.__state = None
+        self.__state = None
+
+    @property
+    def state_identifier(self):
+        return self.__state.identifier
 
     def filter(self, entry):
         """
