@@ -2,7 +2,7 @@
 
 import logging
 from .log_filter_state import _LogFilterState
-from .state_factory import *
+from .state_type import StateType
 from ..exceptions import FullDefaultException, FullHighException
 
 logger = logging.getLogger(__name__)
@@ -18,6 +18,8 @@ class DefaultState(_LogFilterState):
     Temporal coherency of the events is assured, even if contingency measures are enforced.
     """
 
+    identifier = "Default"
+
     def add_default_entry(self, entry):
         """
         Add default priority entry
@@ -28,7 +30,9 @@ class DefaultState(_LogFilterState):
             self._log_filter.add_to_default_queue(entry)
         except FullDefaultException:
             logger.info("Enter Contingency state")
-            self._change_state(StateType.CONTINGENCY)  # enter contingency state
+            self._change_state(StateType.CONTINGENCY)           # enter contingency state
+            self._log_filter.log_entries.reset()                # discard default priority queue
+            self.unbind()
 
     def add_high_priority_entry(self, entry):
         """
@@ -41,9 +45,10 @@ class DefaultState(_LogFilterState):
             self._log_filter.add_to_high_priority_queue(entry)
         except (FullDefaultException, FullHighException):
             logger.info("Enter Contingency state")
-            self._change_state(StateType.CONTINGENCY)  # enter contingency state
-
+            self._change_state(StateType.CONTINGENCY)           # enter contingency state
+            self._log_filter.log_entries.reset()                # discard default priority queue
             self._log_filter.filter_high_priority_entry(entry)  # delegate choice to log filter
+            self.unbind()
 
     def process(self):
         """

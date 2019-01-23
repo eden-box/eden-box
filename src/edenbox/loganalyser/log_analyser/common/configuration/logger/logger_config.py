@@ -4,7 +4,7 @@ from pkg_resources import resource_filename
 from log_analyser.common.configuration.config import Config
 
 
-class __LoggerConfig(Config):
+class LoggerConfig(Config):
     """
     Logger configuration wrapper
     """
@@ -15,6 +15,3 @@ class __LoggerConfig(Config):
 
     def logging_config(self) -> str:
         return self.get_property("log_config")
-
-
-LoggerConfig = __LoggerConfig()
