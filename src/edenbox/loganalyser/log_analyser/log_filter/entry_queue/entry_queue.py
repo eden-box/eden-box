@@ -19,11 +19,10 @@ class EntryQueue:
         Add an entry to the queue
         :param entry: entry to add
         """
-        if not self.__entries.full():
-            try:
-                self.__entries.put_nowait(entry)
-            except Full as e:  # when queue is full
-                raise FullQueueException(e, "Entry could not be added, queue is full")
+        try:
+            self.__entries.put_nowait(entry)
+        except Full as e:  # when queue is full
+            raise FullQueueException(e, "Entry could not be added, queue is full")
 
     def get(self):
         """
@@ -38,7 +37,7 @@ class EntryQueue:
     def size(self):
         """
         Current queue size
-        :return:
+        :return: current queue size
         """
         return self.__entries.qsize()
 
