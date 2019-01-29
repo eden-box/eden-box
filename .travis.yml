@@ -1,3 +1,5 @@
+dist: xenial
+
 language: python
 
 cache: pip
@@ -12,13 +14,7 @@ branches:
 python:
   - 3.5
   - 3.6
-
-# Enable 3.7 without globally enabling sudo and dist: xenial for other build jobs
-matrix:
-  include:
-    - python: 3.7
-      dist: xenial
-      sudo: true
+  - 3.7
 
 # cd to intended folder
 before_install: cd src/edenbox/loganalyser
