@@ -2,26 +2,10 @@
 
 import pytest
 from pytest_mock import mocker
-from log_analyser import DatabaseConnector, LogFilter
+from log_analyser import LogFilter
 
 
 class TestLogFilter:
-
-    @pytest.fixture(scope="function")
-    def mocked_db_connector(self, mocker):
-        """"
-        Returns a dummy database connector
-        This dummy will serve as an analyser of the method calls issued by the Log Filter
-        """
-
-        mocker.patch.object(DatabaseConnector, "__init__", return_value=None)  # avoid database connection
-        mocker.patch.object(DatabaseConnector, "dispatch", return_value=None)  # mock dispatch calls
-
-        db_conn = DatabaseConnector()
-
-        mocker.spy(db_conn, 'dispatch')  # used to access dispatch method calls
-
-        return db_conn
 
     @pytest.fixture(scope="function")
     def get_filter(self, helper, mocked_db_connector):
