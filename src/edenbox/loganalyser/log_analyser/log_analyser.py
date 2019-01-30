@@ -38,7 +38,10 @@ class LogAnalyser:
         self.logger.info("Starting Log Analyser")
 
         self.logger.info("Starting Log Parser")
-        LogParser(self.file_name, self.log_filter)  # blocks for parsing
+        log_parser = LogParser(self.file_name, self.log_filter)
+
+        log_parser.run()  # blocks for parsing
+
         self.logger.info("Log Parser stopped")
 
         self.logger.info("Exiting Log Analyser")
