@@ -1,11 +1,15 @@
 #!/usr/bin/env python3.7
 
 import time
+import logging
+from pathlib import Path
 from threading import Thread
 from multiprocessing import Pool
 from log_analyser.log_entry_processor import LogEntryProcessor
 from .log_parser_config import LogParserConfig as Config
 from .exceptions import NoLogFileException
+
+logger = logging.getLogger(__name__)
 
 
 class LogParser:
@@ -19,26 +23,45 @@ class LogParser:
     active = False
 
     """default pooling time interval"""
-    __def_sleep = Config.default_sleep()
+    __def_sleep = None
 
     """max pooling time interval"""
-    __max_sleep = Config.max_sleep()
+    __max_sleep = None
+
+    """thread responsible for log file parsing"""
+    __parser_thread = None
 
     def __init__(self, file, log_filter):
 
-        self.__file = file
+        self.__def_sleep = Config.default_sleep()
+
+        self.__max_sleep = Config.max_sleep()
+
+        if Path(file).is_file():
+            self.__file = file
+        else:
+            logger.critical("Log file does not exist")
+            raise NoLogFileException("Log file does not exist")
+
         self.__log_filter = log_filter
 
         # Process Pool creation
         self.__process_pool = Pool(processes=Config.processes())
 
+    def run(self, keepalive=True):
         # Thread creation
-        thread = Thread(target=self.__run, args=self.__file, daemon=True)
-        thread.start()
+        self.__parser_thread = Thread(target=self.__run, args=(self.__file,), daemon=True)
+        self.__parser_thread.start()
 
-        # Blocks until thread stops
-        thread.join()
+        if keepalive:
+            self.__parser_thread.join()
+            self.stop()
+
+    def stop(self):
+
         self.active = False
+
+        self.__parser_thread.join()
 
         # Cleanup
         self.__process_pool.close()
@@ -56,6 +79,7 @@ class LogParser:
                 for line in lines:
                     self.__process(line)
         except IOError as e:
+            logger.critical("Log file does not exist")
             raise NoLogFileException(e, "Log file does not exist")
 
     def __tail(self, file):
