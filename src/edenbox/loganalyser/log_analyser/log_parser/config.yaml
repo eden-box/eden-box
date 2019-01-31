@@ -1,0 +1,13 @@
+%YAML 1.2
+---
+app:
+  file_access_mode: "r" # log file access mode
+  default_sleep: 0.00001 # log parser default sleep time between readlines
+  max_sleep: 1.0 # log parser max sleep time between readlines, reached when file updates are less frequent
+  processes: 4 # TODO configure
+test:
+  file_access_mode: "r" # log file access mode
+  default_sleep: 0.00001 # log parser default sleep time between readlines
+  max_sleep: 1.0 # log parser max sleep time between readlines, reached when file updates are less frequent
+  processes: 8 # TODO configure
+...

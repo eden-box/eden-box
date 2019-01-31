@@ -1,0 +1,28 @@
+dist: xenial
+
+language: python
+
+cache: pip
+
+branches:
+  only:
+    - master
+    - dev
+    - loganalyser
+
+# Existing Python versions
+python:
+  - 3.5
+  - 3.6
+  - 3.7
+
+# cd to intended folder
+before_install: cd src/edenbox/loganalyser
+
+# command to install dependencies
+install:
+  - python -m pip install -r requirements.txt
+
+# command to run tests
+script:
+  - python3 -m pytest
