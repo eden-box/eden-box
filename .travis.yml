@@ -8,7 +8,7 @@ branches:
   only:
     - master
     - dev
-    - loganalyser
+    - activ-analyser
 
 # Existing Python versions
 python:
