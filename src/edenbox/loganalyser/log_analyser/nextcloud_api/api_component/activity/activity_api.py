@@ -1,6 +1,7 @@
 #! usr/bin/env python3.7
 
 from ..api_component import _ApiComponent
+from .factory import ActivityFactory, Activities
 
 
 class ActivityApi(_ApiComponent):
@@ -11,7 +12,9 @@ class ActivityApi(_ApiComponent):
     """Path to reach the API, appended to the base URL"""
     _endpoint_url = "/ocs/v2.php/apps/activity/api/v2/activity"
 
-    async def get_activities(self, since="", limit="", object_type="", object_id="", sort=""):
+    __activity_factory = ActivityFactory()
+
+    async def get_activities(self, since="", limit="", object_type="", object_id="", sort="") -> Activities:
         """
         Return the available activities, filtered based on a set of parameters
         The most recent activity received is defined by the since parameter, from there, all the available activities,
@@ -32,4 +35,6 @@ class ActivityApi(_ApiComponent):
             "sort": sort
         }
 
-        return await self._request_manager.get(url=self._api_url, query_components=params)
+        body, headers = await self._request_manager.get(url=self._api_url, query_components=params)
+
+        return self.__activity_factory.get_activities(xml_object=body, headers=headers)
