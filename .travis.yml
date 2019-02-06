@@ -25,4 +25,4 @@ install:
 
 # command to run tests
 script:
-  - python3 -m pytest
+  - python3 -m pytest -m "not manual"
