@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.7
 
 import abc
-import datetime
+import dateutil.parser
 
 
 class _ActivityCreator(metaclass=abc.ABCMeta):
@@ -39,7 +39,7 @@ class _ActivityCreator(metaclass=abc.ABCMeta):
         :return: activity objects
         """
         activity_id = xml_dict["activity_id"]
-        datetime = xml_dict["datetime"]
+        time = xml_dict["datetime"]
 
         activities = []
 
@@ -51,7 +51,7 @@ class _ActivityCreator(metaclass=abc.ABCMeta):
         for file in elements:
             activity = self._return_activity(
                 activity_id=int(activity_id),
-                timestamp=datetime.datetime.strptime(datetime),
+                timestamp=dateutil.parser.parse(time),
                 file=file,
                 xml_dict=xml_dict
             )

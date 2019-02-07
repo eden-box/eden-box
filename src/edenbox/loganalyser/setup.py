@@ -31,9 +31,20 @@ setup(
 
     packages=find_packages(exclude=['docs', 'tests']),
 
-    install_requires=['PyYAML', 'Psycopg2', 'aiohttp', 'xmltodict'],
+    install_requires=[
+        'PyYAML',
+        'Psycopg2',
+        'aiohttp',
+        'xmltodict',
+        'python-dateutil'
+    ],
 
-    tests_require=['pytest', 'mock', 'pytest-mock', 'pytest-asyncio'],
+    tests_require=[
+        'pytest',
+        'mock',
+        'pytest-mock',
+        'pytest-asyncio'
+    ],
 
     extras_require={
     },

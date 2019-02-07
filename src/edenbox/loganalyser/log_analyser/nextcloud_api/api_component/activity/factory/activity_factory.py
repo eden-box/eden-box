@@ -74,9 +74,10 @@ class ActivityFactory(metaclass=Singleton):
         :return: list of created activity objects
         """
 
-        first = headers.get("X-Activity-First-Known")  # defaults to None, if key does not exist
+        # defaults to None, if key does not exist
+        first = headers.get("X-Activity-First-Known")
 
-        last = headers.get("X-Activity-Last-Given")   # defaults to None, if key does not exist
+        last = headers.get("X-Activity-Last-Given")
 
         activities = []
 

@@ -19,8 +19,9 @@ class TestNextcloudApi:
 
         res = await api.activity_api.get_activities(limit=limit, since=since)
 
-        for entry in res.activities:
-            print(entry.activity_id)
-            print(entry.file)
+        for activity in res.activities:
+            print(activity.activity_id)
+            print(activity.file)
+            print(activity.time)
 
         assert True
