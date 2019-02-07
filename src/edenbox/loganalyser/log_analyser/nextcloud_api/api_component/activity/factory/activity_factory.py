@@ -1,22 +1,23 @@
 #!/usr/bin/env python3.7
 
 import xmltodict
-from multiprocessing.pool import ThreadPool
-from log_analyser.common import Singleton
-from .activities import Activities
+from multiprocessing import Pool
 from .creators import *
+from .activities import Activities
+from log_analyser.common import Singleton
+from .activity_processor import ActivityProcessor
 
 
 class ActivityFactory(metaclass=Singleton):
     """
     Transforms XML to the correspondent object type
 
-    Converts XML activities to usable objects, depending on the available set of activity creators
+    Converts XML activities to objects, depending on the available set of activity creators
     """
 
     def __init__(self):
 
-        self._activity_creators = {}
+        self.__activity_creators = {}
 
         # Initialize available activity creators
 
@@ -30,62 +31,79 @@ class ActivityFactory(metaclass=Singleton):
         ):
             creator.register(self)
 
+    def __get_creator(self, creator_id):
+        """
+        Return a creator identifiable by the provided parameter
+        :param creator_id: id of the creator
+        :return: returns the creator identified by creator_id, otherwise an innocuous creator is returned
+        """
+        return self.__activity_creators.get(creator_id, self.__default_entry_creator)
+
     def register(self, creator_id, creator):
         """
         Register a creator to the factory
         :param creator_id: id of the added creator
         :param creator: creator to add
         """
-        self._activity_creators[creator_id] = creator
+        self.__activity_creators[creator_id] = creator
+
+    def create_activity(self, creator_id, activity):
+        """
+        Create an activity using and appropriate creator
+        :param creator_id: identifier of the type of object
+        :param activity: unprocessed activity
+        :return: activity object
+        """
+        return self.__get_creator(creator_id).create(activity)
+
+    @staticmethod
+    def __get_activity_id(activity):
+        """
+        Helper method to obtain activity id
+        Used as key for activity list sorting
+        :param activity: activity
+        :return: activity id
+        """
+        return activity.activity_id
 
     def get_activities(self, headers, xml_object) -> Activities:
         """
         Convert xml to correspondent objects
-        :param headers: API request headers
+        :param headers: API request headers, a CIMultiDict
         :param xml_object: xml activity dict
         :return: list of created activity objects
         """
 
-        first = None
+        first = headers.get("X-Activity-First-Known")  # defaults to None, if key does not exist
 
-        if "X-Activity-First-Known" in headers:
-            first = headers["X-Activity-First-Known"]
-
-        last = headers["X-Activity-Last-Given"]
+        last = headers.get("X-Activity-Last-Given")   # defaults to None, if key does not exist
 
         activities = []
 
-        pool = ThreadPool(processes=4)
+        pool = Pool(processes=4)
+
+        def __add_activities(activity):
+            """
+            Add processed activity object to activities list
+            :param activity: processed activity
+            """
+            activities.extend(activity)
 
         def __add_to_pool(_, activity):
             """
-            Add job to Thread Pool
+            Add job to process Pool
             :param _: unhelpful argument, required for parser callback to work properly
             :param activity: activity converted from XML to a dict
             :return: True, required for parser callback to work properly
             """
-            pool.apply_async(func=__process_activity, args=(activity,))
+            pool.apply_async(func=ActivityProcessor.create_activity, args=(self, activity), callback=__add_activities)
             return True
-
-        def __process_activity(activity):
-            """
-            If it is an activity, obtain the necessary attributes and create an object
-            :param activity: activity converted from xml to dict
-            """
-
-            if "activity_id" in activity:  # easy way to make sure that activity is not a xml metadata object
-
-                identifier = activity["type"]
-
-                activities.extend(
-                    self._activity_creators.get(identifier, self.__default_entry_creator).create(activity)
-                )
 
         xmltodict.parse(xml_object, item_depth=3, item_callback=__add_to_pool)
 
         pool.close()
         pool.join()
 
-        activities.sort(key=lambda activity: int(activity.activity_id))  # assure ordered activities, after pool
+        activities.sort(key=self.__get_activity_id)  # assure ordered activities, after pool
 
         return Activities(activities=activities, last=last, first=first)

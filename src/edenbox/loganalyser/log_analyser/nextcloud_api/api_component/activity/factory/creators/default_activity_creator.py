@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.7
 
 from .activity_creator import _ActivityCreator
+from .activity_types import NullActivity
 
 
 class DefaultActivityCreator(_ActivityCreator):
@@ -12,4 +13,4 @@ class DefaultActivityCreator(_ActivityCreator):
     _identifier = "default"
 
     def _return_activity(self, activity_id, timestamp, file, xml_dict):
-        pass
+        return NullActivity(activity_id, timestamp, file, xml_dict)

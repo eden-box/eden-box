@@ -1,12 +1,22 @@
 #!/usr/bin/env python3.7
 
 import abc
+import datetime
 
 
 class Activity(metaclass=abc.ABCMeta):
     """
     Explicit representation of an activity
     """
+
+    """activity ID"""
+    activity_id = int
+
+    """file handled in this activity"""
+    file = str
+
+    """activity timestamp"""
+    time = datetime.datetime
 
     def __init__(self, activity_id, timestamp, file, xml_dict):
         self.activity_id = activity_id

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.7
 
 import abc
+import datetime
 
 
 class _ActivityCreator(metaclass=abc.ABCMeta):
@@ -48,7 +49,12 @@ class _ActivityCreator(metaclass=abc.ABCMeta):
             elements = [elements]
 
         for file in elements:
-            activity = self._return_activity(activity_id=activity_id, timestamp=datetime, file=file, xml_dict=xml_dict)
+            activity = self._return_activity(
+                activity_id=int(activity_id),
+                timestamp=datetime.datetime.strptime(datetime),
+                file=file,
+                xml_dict=xml_dict
+            )
             if activity:
                 activities.append(activity)
 

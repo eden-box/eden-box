@@ -8,6 +8,12 @@ class FileRenamedActivity(_PrioritaryActivity):
     Generated when a file is renamed
     """
 
+    """previous path of the renamed file"""
+    old_file = str
+
+    """new path of the renamed file"""
+    new_file = str
+
     __procedure = "file_renamed"
 
     def _activity_process(self, xml_dict):
