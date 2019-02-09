@@ -5,7 +5,7 @@ from log_analyser.nextcloud_api import NextcloudApi
 
 
 @pytest.mark.manual
-class TestNextcloudApi:
+class TestActivityApi:
 
     @pytest.mark.asyncio
     async def test_api_request(self):

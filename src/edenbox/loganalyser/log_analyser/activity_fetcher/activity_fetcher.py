@@ -82,7 +82,7 @@ class ActivityFetcher:
 
             stocked_activities = stocked_activities[0].merge_activities(stocked_activities[1:])
 
-            for activity in stocked_activities:
+            for activity in iter(stocked_activities):
                 self.__activity_filter.filter(activity)
 
             self.__set_last_activity(new_most_recent)
