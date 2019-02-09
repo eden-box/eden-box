@@ -21,7 +21,7 @@ class ActivityFactory(metaclass=Singleton):
 
         # Initialize available activity creators
 
-        self.__default_entry_creator = DefaultActivityCreator()  # used if no matching creator is found
+        self.__default_entry_creator = NullActivityCreator()  # used if no matching creator is found
 
         for creator in (
                 FileAddedActivityCreator(),

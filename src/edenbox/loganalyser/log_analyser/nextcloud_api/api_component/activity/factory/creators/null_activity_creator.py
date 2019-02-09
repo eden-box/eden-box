@@ -4,13 +4,13 @@ from .activity_creator import _ActivityCreator
 from .activity_types import NullActivity
 
 
-class DefaultActivityCreator(_ActivityCreator):
+class NullActivityCreator(_ActivityCreator):
     """
-    Default Entry Creator
+    Null Entry Creator
     Returns no object, used for xml objects which do not match with other creators
     """
 
-    _identifier = "default"
+    _identifier = "null"
 
     def _return_activity(self, activity_id, timestamp, file, xml_dict):
         return NullActivity(activity_id, timestamp, file, xml_dict)
