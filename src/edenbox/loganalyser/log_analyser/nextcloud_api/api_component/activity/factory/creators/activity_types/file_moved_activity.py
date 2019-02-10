@@ -3,18 +3,18 @@
 from .prioritary_activity import _PrioritaryActivity
 
 
-class FileRenamedActivity(_PrioritaryActivity):
+class FileMovedActivity(_PrioritaryActivity):
     """
-    Generated when a file is renamed
+    Generated when a file is moved or renamed
     """
 
-    """previous path of the renamed file"""
+    """previous path of the file"""
     old_file = str
 
-    """new path of the renamed file"""
+    """new path of the file"""
     new_file = str
 
-    __procedure = "file_renamed"
+    __procedure = "file_moved"
 
     def _activity_process(self, xml_dict):
         changes = xml_dict["subject_rich"]["element"][1]
