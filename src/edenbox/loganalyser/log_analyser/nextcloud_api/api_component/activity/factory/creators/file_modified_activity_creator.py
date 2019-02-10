@@ -12,11 +12,10 @@ class FileModifiedActivityCreator(_ActivityCreator):
     _identifier = "file_changed"
 
     def _return_activity(self, activity_id, timestamp, file, xml_dict):
-        # TODO verify if other options exist
         action = xml_dict["subject_rich"]["element"][0]
         if "changed" in action:
             return FileModifiedActivity(activity_id, timestamp, file, xml_dict)
-        elif "renamed" in action:
+        elif ("renamed" in action) or ("moved" in action):
             return FileRenamedActivity(activity_id, timestamp, file, xml_dict)
         else:
             return NullActivity(activity_id, timestamp, file, xml_dict)
