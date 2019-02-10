@@ -26,6 +26,9 @@ class RequestManager:
 
         self._session = aiohttp.ClientSession(auth=self.auth_pk, headers=self.h_default)
 
+    async def stop(self):
+        await self._session.close()
+
     async def get(self, url, query_components=()):
         async with self._session.get(url, params=query_components) as resp:
             res = await resp.text()

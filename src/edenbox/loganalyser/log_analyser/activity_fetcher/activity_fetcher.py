@@ -1,11 +1,21 @@
 #! usr/bin/env python3.7
 
+import logging
 from threading import Timer
-from .activity_fetcher_config import ActivityFetcherConfig as Config
+from pkg_resources import resource_filename
 from ..nextcloud_api import NextcloudApi
+from log_analyser.common.configuration import loader
+from .activity_fetcher_config import ActivityFetcherConfig as Config
+
+logger = logging.getLogger(__name__)
 
 
 class ActivityFetcher:
+    """
+    Activity Fetcher
+    Periodically requests activity updates to an external API, processes the response
+    and forwards it to the activity filter
+    """
 
     """most recent activity already processed"""
     __last_activity = None
@@ -15,26 +25,32 @@ class ActivityFetcher:
 
     def __init__(self, activity_filter):
 
-        self.__limit = Config.max_activities()
+        self.__state_file_path = resource_filename(__name__, "config.yaml")
 
-        self.__get_most_recent_activity()
+        self.__load_most_recent_activity()
+
+        self.__limit = Config.max_activities()
 
         self.__activity_filter = activity_filter
 
-        self.__api = NextcloudApi(
+        self.__base_api = NextcloudApi(
             endpoint=Config.endpoint(),
             user=Config.username(),
             password=Config.password()
-        ).activity_api
+        )
+
+        self.__api = self.__base_api.activity_api
 
         self.__process_timer = Timer(interval=Config.process_interval(), function=self.__process_activities)
         self.__process_timer.daemon = True
 
-    def __get_most_recent_activity(self):
+    def __load_most_recent_activity(self):
         """
-        TODO Load the ID of the last processed activity
+        Load the most recently processed activity id
         """
-        return -1
+        config = loader.get_config(self.__state_file_path)
+        self.__last_activity = config.get("last_activity")
+        logger.info("Loaded activity with id: %s.", self.__last_activity)
 
     def __set_last_activity(self, activity_id):
         """
@@ -42,20 +58,31 @@ class ActivityFetcher:
         The new activity_id should and be written to a file, to allow coherent system restart
         :param activity_id: new activity id
         """
-        # TODO save id into a file, or similar persistent option
+        loader.save_config(
+            self.__state_file_path,
+            {"last_activity": activity_id}
+        )
         self.__last_activity = activity_id
 
-    def run(self):
+    def run(self, keepalive=True):
         """
         Initiate periodic requests to external API
+        :param keepalive: if True, the
         """
         self.__process_timer.start()
+        logger.info("Activity Fetcher is operational.")
+
+        if keepalive:
+            self.__process_timer.join()
+            self.stop()
 
     def stop(self):
         """
-        Stop periodic requests to external API
+        Stop periodic requests to external API and close connections
         """
         self.__process_timer.cancel()
+        self.__base_api.stop()
+        logger.info("Activity Fetcher has been stopped.")
 
     def __process_activities(self):
 

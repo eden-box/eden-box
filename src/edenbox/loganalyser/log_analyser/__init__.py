@@ -2,3 +2,4 @@
 
 from .log_filter import LogFilter
 from .database_connector import DatabaseConnector
+from .nextcloud_api import NextcloudApi
