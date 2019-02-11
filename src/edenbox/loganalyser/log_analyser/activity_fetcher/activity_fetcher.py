@@ -25,7 +25,7 @@ class ActivityFetcher:
 
     def __init__(self, activity_filter):
 
-        self.__state_file_path = resource_filename(__name__, "config.yaml")
+        self.__state_file_path = resource_filename(__name__, "last_activity.yaml")
 
         self.__load_most_recent_activity()
 
