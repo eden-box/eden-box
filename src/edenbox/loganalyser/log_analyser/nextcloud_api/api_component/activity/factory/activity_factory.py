@@ -27,7 +27,8 @@ class ActivityFactory(metaclass=Singleton):
                 FileAddedActivityCreator(),
                 FileRemovedActivityCreator(),
                 FileModifiedActivityCreator(),
-                FileAccessActivityCreator()
+                FileAccessActivityCreator(),
+                FileRestoredActivityCreator()
         ):
             creator.register(self)
 

@@ -35,6 +35,6 @@ class ActivityApi(_ApiComponent):
             "sort": sort
         }
 
-        body, headers = await self._request_manager.get(url=self._api_url, query_components=params)
+        body, headers, status = await self._request_manager.get(url=self._api_url, query_components=params)
 
         return self.__activity_factory.get_activities(xml_object=body, headers=headers)

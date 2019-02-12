@@ -27,6 +27,9 @@ class NextcloudApi:
             "activity": ActivityApi(self, self._request_manager)
         }
 
+    async def stop(self):
+        await self._request_manager.stop()
+
     def get_full_url(self, api_url):
         """
         Provides the request URL, after appending a specific API path

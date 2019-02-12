@@ -26,22 +26,25 @@ class RequestManager:
 
         self._session = aiohttp.ClientSession(auth=self.auth_pk, headers=self.h_default)
 
+    async def stop(self):
+        await self._session.close()
+
     async def get(self, url, query_components=()):
         async with self._session.get(url, params=query_components) as resp:
             res = await resp.text()
-        return res, resp.headers
+        return res, resp.headers, resp.status
 
     async def post(self, url, query_components=(), data=None):
         async with self._session.post(url, params=query_components, headers=self.h_post, data=data) as resp:
             res = await resp.text()
-        return res, resp.headers
+        return res, resp.headers, resp.status
 
     async def put(self, url, query_components=(), data=None):
         async with self._session.put(url, params=query_components, headers=self.h_post, data=data) as resp:
             res = await resp.text()
-        return res, resp.headers
+        return res, resp.headers, resp.status
 
     async def delete(self, url, query_components=(), data=None):
         async with self._session.delete(url, params=query_components, headers=self.h_post, data=data) as resp:
             res = await resp.text()
-        return res, resp.headers
+        return res, resp.headers, resp.status

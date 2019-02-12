@@ -5,7 +5,7 @@ from log_analyser.nextcloud_api import NextcloudApi
 
 
 @pytest.mark.manual
-class TestNextcloudApi:
+class TestActivityApi:
 
     @pytest.mark.asyncio
     async def test_api_request(self):
@@ -20,8 +20,7 @@ class TestNextcloudApi:
         res = await api.activity_api.get_activities(limit=limit, since=since)
 
         for activity in res.activities:
-            print(activity.activity_id)
-            print(activity.file)
-            print(activity.time)
+            msg = "\nID: {} \n File: {} \n Timestamp: {}".format(activity.activity_id, activity.file, activity.time)
+            print(msg)
 
         assert True

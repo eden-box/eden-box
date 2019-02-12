@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.7
 
-import logging
+import logging.config
 from log_analyser.common import LoggerConfig
 from .log_analyser_config import LogAnalyserConfig
 from .log_analyser import LogAnalyser

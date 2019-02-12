@@ -19,7 +19,6 @@ class ActivityProcessor:
         activities = []
 
         if "activity_id" in activity:  # make sure that activity is not a xml metadata object
-
             activities = factory.create_activity(activity["type"], activity)
 
         return activities
