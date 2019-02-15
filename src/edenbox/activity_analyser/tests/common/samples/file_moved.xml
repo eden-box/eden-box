@@ -1,0 +1,40 @@
+<element>
+  <activity_id>10000</activity_id>
+  <app>files</app>
+  <type>file_changed</type>
+  <user>user</user>
+  <subject>You moved old_folder/test.txt to new_folder/test.txt</subject>
+  <subject_rich>
+	<element>You moved {oldfile} to {newfile}</element>
+	<element>
+	  <newfile>
+		<type>file</type>
+		<id>10000</id>
+		<name>test.txt</name>
+		<path>new_folder/test.txt</path>
+		<link>link</link>
+	  </newfile>
+	  <oldfile>
+		<type>file</type>
+		<id>10000</id>
+		<name>test.txt</name>
+		<path>old_folder/test.txt</path>
+		<link>link</link>
+	  </oldfile>
+	</element>
+  </subject_rich>
+  <message></message>
+  <message_rich>
+	<element></element>
+	<element/>
+  </message_rich>
+  <object_type>files</object_type>
+  <object_id>10000</object_id>
+  <object_name>test.txt</object_name>
+  <objects>
+	<element>test.txt</element>
+  </objects>
+  <link>link</link>
+  <icon>icon</icon>
+  <datetime>2019-01-01T12:00:00+00:00</datetime>
+</element>

@@ -1,0 +1,40 @@
+<element>
+  <activity_id>10000</activity_id>
+  <app>files</app>
+  <type>file_changed</type>
+  <user>user</user>
+  <subject>You renamed old_file.txt to new_file.txt</subject>
+  <subject_rich>
+	<element>You renamed {oldfile} to {newfile}</element>
+	<element>
+	  <newfile>
+		<type>file</type>
+		<id>10000</id>
+		<name>new_file.txt</name>
+		<path>new_file.txt</path>
+		<link>link</link>
+	  </newfile>
+	  <oldfile>
+		<type>file</type>
+		<id>10000</id>
+		<name>old_file.txt</name>
+		<path>old_file.txt</path>
+		<link>link</link>
+	  </oldfile>
+	</element>
+  </subject_rich>
+  <message></message>
+  <message_rich>
+	<element></element>
+	<element/>
+  </message_rich>
+  <object_type>files</object_type>
+  <object_id>10000</object_id>
+  <object_name>new_file.txt</object_name>
+  <objects>
+	<element>new_file.txt</element>
+  </objects>
+  <link>link</link>
+  <icon>icon</icon>
+  <datetime>2019-01-01T12:00:00+00:00</datetime>
+</element>
