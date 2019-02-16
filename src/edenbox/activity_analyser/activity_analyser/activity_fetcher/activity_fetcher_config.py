@@ -14,6 +14,9 @@ class __ActivityFetcherConfig(Config):
     _file_path = resource_filename(__name__, "config.yaml")
 
     def process_interval(self):
+        """
+        Time, in seconds, between a new set of activities is requested to the API
+        """
         return self.get_property("process_interval")
 
     def endpoint(self):
@@ -25,8 +28,8 @@ class __ActivityFetcherConfig(Config):
     def password(self):
         return self.get_property("password")
 
-    def max_activities(self):
-        return self.get_property("max_activities")
+    def max_activities_per_request(self):
+        return self.get_property("max_activities_per_request")
 
 
 ActivityFetcherConfig = __ActivityFetcherConfig()

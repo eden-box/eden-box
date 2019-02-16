@@ -26,7 +26,7 @@ class TestActivityFilter:
 
             log_filter = ActivityFilter(mocked_db_connector)
 
-            helper.methods.process_queue(log_filter, entries=activities)
+            helper.methods.process_queue(log_filter, activities=activities)
 
             return mocked_db_connector, log_filter
 
@@ -46,7 +46,7 @@ class TestActivityFilter:
         """
         mocked_db_connector, log_filter = get_filter()
 
-        helper.methods.process_queue(log_filter, entries=activities)
+        helper.methods.process_queue(log_filter, activities=activities)
 
         helper.methods.wait_for_dispatch(1)
 

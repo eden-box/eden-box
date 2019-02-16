@@ -1,9 +1,9 @@
 #!/usr/bin/env python3.7
 
 
-class EntryQueueException(Exception):
+class ActivityQueueException(Exception):
     """
-    Exception raised by Entry Queue
+    Exception raised by Activity Queue
     """
 
     def __init__(self, error, message=None):

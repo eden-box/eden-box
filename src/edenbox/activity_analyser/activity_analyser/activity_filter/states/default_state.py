@@ -9,34 +9,28 @@ logger = logging.getLogger(__name__)
 
 class DefaultState(_ActivityFilterState):
     """
-    Defines default log filter behavior
-
-    Default entries are added to default filter queue,
-    while high priority entries are also added to high priority queue.
-
-    Temporal coherency of the events is assured, even if contingency measures are enforced.
+    Defines activity filter behavior
+    Temporal coherency of the events is assured
     """
 
     identifier = "default"
 
     def add_activity(self, activity):
         """
-        Add default priority entry
+        Add activity
         :param activity: activity to add
         """
         try:
-            self._log_filter.activities.add(activity)
+            self._activity_filter.activities.add(activity)
         except FullActivityQueueException:
-            logger.warning("Unable to add activity to queue")
+            logger.warning("Unable to add activity to queue.")
 
     def process(self):
         """
-        Process entry queues
-
-        Reset default high priority queue and process default priority queue only
+        Process activity queue
         """
 
-        old_queue = self._log_filter.activities.reset()
+        old_queue = self._activity_filter.activities.reset()
 
         logger.debug("Process Queue")
         self._dispatch_queue(old_queue)

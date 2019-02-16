@@ -72,5 +72,5 @@ class DatabaseConnector:
         except DatabaseError as e:
             raise FailedConnectionException(e, "Failed to obtain connection to database")
         finally:
-            if conn is not None:
+            if conn:
                 self.__put_connection(conn)

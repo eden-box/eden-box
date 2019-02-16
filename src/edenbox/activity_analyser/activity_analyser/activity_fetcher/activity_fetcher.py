@@ -29,7 +29,7 @@ class ActivityFetcher:
 
         self.__load_most_recent_activity()
 
-        self.__limit = Config.max_activities()
+        self.__limit = Config.max_activities_per_request()
 
         self.__activity_filter = activity_filter
 

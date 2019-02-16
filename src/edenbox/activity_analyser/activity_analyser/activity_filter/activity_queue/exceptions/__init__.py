@@ -1,3 +1,3 @@
-from .entry_queue_exception import EntryQueueException
+from .entry_queue_exception import ActivityQueueException
 from .full_queue_exception import FullQueueException
 from .empty_queue_exception import EmptyQueueException

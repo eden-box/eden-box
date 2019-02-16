@@ -5,11 +5,11 @@ app:
   endpoint: "<endpoint>"
   username: "<username>"
   password: "<password>"
-  max_activities: 50
+  max_activities_per_request: 50
 test:
   process_interval: 60
   endpoint: "<endpoint>"
   username: "<username>"
   password: "<password>"
-  max_activities: 50
+  max_activities_per_request: 50
 ...

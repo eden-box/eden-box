@@ -5,13 +5,13 @@ import abc
 
 class _ActivityFilterState(metaclass=abc.ABCMeta):
     """
-    Log filter behavior
-    Defines how entries are added to the filter and how they are processed
+    Activity filter behavior
+    Defines how activities are added to the filter and how they are processed
     """
 
-    def __init__(self, log_filter):
-        log_filter.bind_state(self)
-        self._log_filter = log_filter
+    def __init__(self, activity_filter):
+        activity_filter.bind_state(self)
+        self._activity_filter = activity_filter
 
     @property
     @abc.abstractmethod
@@ -23,40 +23,40 @@ class _ActivityFilterState(metaclass=abc.ABCMeta):
         Unbinds state
         Used to assure garbage collection
         """
-        self._log_filter = None
+        self._activity_filter = None
 
     def _change_state(self, state_type):
         """
         Change state
         :param state_type: next state type
-        :return: log filter
+        :return: activity filter
         """
         from .state_manager import StateManager
 
         StateManager.register_state(
             state_type,
-            self._log_filter
+            self._activity_filter
         )
 
     @abc.abstractmethod
-    def add_activity(self, entry):
+    def add_activity(self, activity):
         """
-        Add default priority entry
-        :param entry: default priority entry
+        Add activity
+        :param activity: activity to add
         """
         pass
 
     @abc.abstractmethod
     def process(self):
         """
-        Process entry queues
+        Process activity queue
         """
         pass
 
     def _dispatch_queue(self, queue):
         """
-        Dispatches queue entries to a database connector
+        Dispatches queue activities to a database connector
         :param queue: queue to be dispatched
         """
         if not queue.empty():
-            self._log_filter.database_connector.dispatch(queue)
+            self._activity_filter.database_connector.dispatch(queue)

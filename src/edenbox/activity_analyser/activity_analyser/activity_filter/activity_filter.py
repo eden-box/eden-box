@@ -3,35 +3,30 @@
 from threading import Timer
 from .activity_filter_config import ActivityFilterConfig as Config
 from .states import StateType, StateManager
-from .entry_queue import EntryQueue
-from .entry_queue.exceptions import FullQueueException
+from .activity_queue import ActivityQueue
+from .activity_queue.exceptions import FullQueueException
 from .exceptions import FullActivityQueueException
 
 
 class ActivityFilter:
     """
-    Stores entry data to be processed
+    Stores activity data to be processed
 
-    Entry queues are periodically processed given a Timer.
-    File management related entries have high priority, like file addition, renaming or removal, for example.
-
-    If, by any reason, the log filter is overflown with entries, it will enter in contingency
-    mode, where only high priority entries will be added and processed.
-    After contingency is over, the state returns to the default one, processing all entries.
+    The activity queue is periodically processed, according to a Timer.
     """
 
     """database connection manager"""
     database_connector = None
 
-    """log filter state"""
+    """activity filter state"""
     __state = None
 
-    """log entries"""
+    """stored activities"""
     activities = None
 
     def __init__(self, db_connector):
 
-        self.activities = EntryQueue(Config.max_queue_size())
+        self.activities = ActivityQueue(Config.max_queue_size())
 
         StateManager.register_state(
             StateType.DEFAULT,
@@ -68,25 +63,25 @@ class ActivityFilter:
         """
         return self.__state.identifier
 
-    def filter(self, entry):
+    def filter(self, activity):
         """
-        Add entry to filter
-        :param entry: entry to add
+        Filter an activity
+        :param activity: activity to filter
         """
-        entry.add_to_filter(self)
+        activity.add_to_filter(self)
 
-    def add_activity(self, entry):
+    def add_activity(self, activity):
         """
-        Add an entry to default priority queue
-        :param entry: entry to add
+        Add an activity to the activity queue
+        :param activity: activity to add
         """
         try:
-            self.__state.add_activity(entry)
+            self.__state.add_activity(activity)
         except FullQueueException as e:
-            raise FullActivityQueueException(e, "Entry cannot be added, activity queue is full")
+            raise FullActivityQueueException(e, "Activity cannot be added, activity queue is full.")
 
     def __process(self):
         """
-        Process entry queues
+        Process activity queue
         """
         self.__state.process()

@@ -3,7 +3,7 @@
 import time
 import xmltodict
 from .samples import SampleManager
-from activity_analyser.activity_filter.activity_filter_config import ActivityFilterConfig  # allow access to round dispatch time config
+from activity_analyser.activity_filter.activity_filter_config import ActivityFilterConfig  # access dispatch time config
 from activity_analyser.nextcloud_api.api_component.activity.factory.creators import FileAddedActivityCreator
 
 
@@ -13,14 +13,14 @@ class Methods:
     def wait_for_dispatch(rounds):
         """
         Wait for a given number of dispatch rounds to pass
-        :param rounds: number of rounds to wait for
+        :param rounds: number of rounds to wait
         """
         if rounds > 0:
             wait_time = (rounds * ActivityFilterConfig.process_interval()) + 1  # acceptably strict time
             time.sleep(wait_time)
 
-    @classmethod
-    def dummy_activity(cls):
+    @staticmethod
+    def dummy_activity():
         """
         Obtain a dummy activity
         :return: added file activity
@@ -48,20 +48,20 @@ class Methods:
         return entries
 
     @staticmethod
-    def process_queue(log_filter, queue=(), entries=0):
+    def process_queue(activity_filter, queue=(), activities=0):
         """
         Utility to make activity_filter process a queue
         If a queue is provided, that is the one to process, if default or high values are set,
         a queue with the requested quantity of entries will be processed.
-        :param log_filter: log filter used to process queue
+        :param activity_filter: filter used to process queue
         :param queue: queue to process
-        :param entries: number of activities to process
+        :param activities: number of activities to process
         """
-        if entries:
-            queue = Methods.dummy_queue(entries)
+        if activities:
+            queue = Methods.dummy_queue(activities)
 
-        for entry in queue:
-            log_filter.filter(entry)
+        for activity in queue:
+            activity_filter.filter(activity)
 
     @staticmethod
     def get_dispatched_arguments(mocked_db):

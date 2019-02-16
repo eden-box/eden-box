@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 setup(
     name='activity_analyser',
 
-    version='0.1.0',
+    version='0.5.0',
 
     description='Fetches activities from an API and sends relevant information to a database.',
 
@@ -16,15 +16,17 @@ setup(
     author_email='eden.box@outlook.com',
 
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
 
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Nextcloud Activity API consumption Tool',
 
         # TODO choose project license
-        'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)',
 
         'Programming Language :: Python :: 3.7',
+
+        'Natural Language :: English',
     ],
 
     keywords='nextcloud api activity filter python',

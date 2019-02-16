@@ -6,7 +6,7 @@ from activity_analyser.common.configuration.config import Config
 
 class __ActivityFilterConfig(Config):
     """
-    Log filter configuration wrapper
+    Activity filter configuration wrapper
     """
 
     _identifier = __name__

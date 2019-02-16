@@ -26,7 +26,7 @@ class ActivityApi(_ApiComponent):
         :param object_type: allows to filter activities to an object type, may only appear together with object_id
         :param object_id: restricts the requested activities to an object id, may only appear together with object_type
         :param sort: order of activities, desc for most recent ones first, "asc" for the opposite (default: desc)
-        :return: (response body (XML), response headers (Dict))
+        :return: tuple with response body (XML) and response headers (Dict)
         """
 
         params = {
