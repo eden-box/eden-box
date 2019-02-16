@@ -12,16 +12,16 @@ class TestActivityFilter:
         """
         Returns a reference for a method able to generate a filter
         This method is used to overcome the limitation of fixtures of not allowing versatile parametrization of inputs
-        :param helper:
-        :param mocked_db_connector:
+        :param helper: test helper class
+        :param mocked_db_connector: database_connector class, mocked for test suite usage
         :return: a reference for the inner function 'dummy'
         """
 
         def dummy(activities=0):
             """
-            Returns a log filter in a given state, after processing some entries and the contained mocked db connector
+            Returns an activity filter, after processing some entries, and the contained mocked db connector
             :param activities: number of activities to process
-            :return: log filter and corresponding mocked db connector
+            :return: activity filter and corresponding mocked db connector
             """
 
             log_filter = ActivityFilter(mocked_db_connector)
@@ -32,19 +32,21 @@ class TestActivityFilter:
 
         return dummy
 
-    @pytest.mark.parametrize("entries, expected", [
+    @pytest.mark.parametrize("activities, expected", [
         (0, 0),
         (1, 1)
     ])
-    def test_base_filtering(self, helper, get_filter, entries, expected):
+    def test_base_filtering(self, helper, get_filter, activities, expected):
         """
-        Verify if dispatch method is called in all cases
-        :param entries: number of default priority entries
+        Verify if dispatch method is only called when there are activities to process
+        :param helper: test helper class
+        :param get_filter: method used to obtain a filter
+        :param activities: number of activities to process
         :param expected: expected value of dispatched entries
         """
         mocked_db_connector, log_filter = get_filter()
 
-        helper.methods.process_queue(log_filter, entries=entries)
+        helper.methods.process_queue(log_filter, entries=activities)
 
         helper.methods.wait_for_dispatch(1)
 

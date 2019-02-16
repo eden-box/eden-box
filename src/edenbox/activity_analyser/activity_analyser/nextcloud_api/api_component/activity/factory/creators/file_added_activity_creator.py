@@ -6,7 +6,7 @@ from .activity_types import FileAddedActivity
 
 class FileAddedActivityCreator(_ActivityCreator):
     """
-    Creates objects representing Added Files
+    Creates objects representing File Additions
     """
 
     _identifier = "file_created"

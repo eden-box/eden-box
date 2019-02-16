@@ -7,7 +7,7 @@ from .activity_types import NullActivity
 class NullActivityCreator(_ActivityCreator):
     """
     Null Entry Creator
-    Returns no object, used for xml objects which do not match with other creators
+    Returns a Null Activity, used for xml objects which do not match with other creators
     """
 
     _identifier = "null"

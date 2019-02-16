@@ -13,7 +13,7 @@ class ActivityProcessor:
         Create an activity using a factory
         :param factory: factory able to process the activity
         :param activity: activity to process
-        :return: processed activity list
+        :return: processed Activity list
         """
 
         activities = []

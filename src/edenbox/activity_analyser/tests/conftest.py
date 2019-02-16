@@ -2,14 +2,14 @@
 
 import pytest
 from pytest_mock import mocker
-from activity_analyser.common.configuration import ConfigManager
 from tests.common import Constants, Methods
+from activity_analyser.common.configuration import ConfigManager
 from activity_analyser.database_connector import DatabaseConnector
 
 
 class Helper:
     """
-    Helper class used for more flexible access to helper methods and constants
+    Helper class used for flexible access to helper methods and constants
     """
 
     """Helper constants to be used on tests"""
@@ -39,7 +39,7 @@ def _setup():
 def mocked_db_connector(mocker):
     """"
     Returns a dummy database connector
-    This dummy will serve as an analyser of the method calls issued by the Log Filter
+    This dummy will serve as an analyser of the method calls issued by the Activity Filter
     """
 
     mocker.patch.object(DatabaseConnector, "__init__", return_value=None)  # avoid database connection

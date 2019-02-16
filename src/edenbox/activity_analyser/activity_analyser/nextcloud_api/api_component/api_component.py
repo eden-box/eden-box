@@ -6,7 +6,7 @@ import abc
 class _ApiComponent:
     """
     API component
-    Defines the external API url and obtains a request manager which will handle the connection to it
+    Defines the external API url and uses a request manager to handle the connection with it
     """
 
     """URL to where requests will be sent"""

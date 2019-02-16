@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.7
 
 from pkg_resources import resource_filename
-from activity_analyser.common.configuration.config import Config
+from .common.configuration.config import Config
 
 
 class __ActivityAnalyserConfig(Config):

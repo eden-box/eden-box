@@ -19,7 +19,7 @@ setup(
         'Development Status :: 3 - Alpha',
 
         'Intended Audience :: Developers',
-        'Topic :: Software Development :: API consumer Tool',
+        'Topic :: Software Development :: Nextcloud Activity API consumption Tool',
 
         # TODO choose project license
         'License :: OSI Approved :: MIT License',
@@ -27,13 +27,13 @@ setup(
         'Programming Language :: Python :: 3.7',
     ],
 
-    keywords='log parser python',
+    keywords='nextcloud api activity filter python',
 
     packages=find_packages(exclude=['docs', 'tests']),
 
     install_requires=[
-        'PyYAML',
-        'Psycopg2',
+        'pyyaml',
+        'psycopg2',
         'aiohttp',
         'xmltodict',
         'python-dateutil'
@@ -57,11 +57,10 @@ setup(
 
     # To provide executable scripts, use entry points in preference to the
     # "scripts" keyword. Entry points provide cross-platform support and allow
-    # `pip` to create the appropriate form of executable for the target
-    # platform.
+    # `pip` to create the appropriate form of executable for the target platform.
     entry_points={
         'console_scripts': [
-            'run=run:main',
+            'activity_analyser=activity_analyser:main',
         ],
     },
 

@@ -7,18 +7,20 @@ from .factory import ActivityFactory, Activities
 class ActivityApi(_ApiComponent):
     """
     Activity API
+    Requests activity information to an external API, processes the response and converts it to Activities
     """
 
     """Path to reach the API, appended to the base URL"""
     _endpoint_url = "/ocs/v2.php/apps/activity/api/v2/activity"
 
+    """Factory able to convert XML dicts to Activities"""
     __activity_factory = ActivityFactory()
 
     async def get_activities(self, since="", limit="", object_type="", object_id="", sort="") -> Activities:
         """
         Return the available activities, filtered based on a set of parameters
         The most recent activity received is defined by the since parameter, from there, all the available activities,
-        older than that one, will be gathered until the limit value of activities is reached.
+        older than that one, will be gathered until the limit value of activities is reached
         :param since: ID of the most recent activity to be received (default behaviour: most recent activity available)
         :param limit: number of activities to be returned (default: 50)
         :param object_type: allows to filter activities to an object type, may only appear together with object_id

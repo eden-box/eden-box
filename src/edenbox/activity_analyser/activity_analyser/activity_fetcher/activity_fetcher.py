@@ -17,7 +17,7 @@ class ActivityFetcher:
     and forwards it to the activity filter
     """
 
-    """most recent activity already processed"""
+    """most recent activity processed"""
     __last_activity = None
 
     """default limit of activities received per request"""
@@ -46,7 +46,7 @@ class ActivityFetcher:
 
     def __load_most_recent_activity(self):
         """
-        Load the most recently processed activity id
+        Load the id of the most recently processed activity
         """
         config = loader.get_config(self.__state_file_path)
         self.__last_activity = config.get("last_activity")
@@ -55,7 +55,7 @@ class ActivityFetcher:
     def __set_last_activity(self, activity_id):
         """
         Define most recent activity processed, maintaining persistent support
-        The new activity_id should and be written to a file, to allow coherent system restart
+        The new activity_id should be written to a file, allowing coherent system restart
         :param activity_id: new activity id
         """
         loader.save_config(
@@ -66,8 +66,8 @@ class ActivityFetcher:
 
     def run(self, keepalive=True):
         """
-        Initiate periodic requests to external API
-        :param keepalive: if True, the
+        Initiate periodic requests to Nextcloud API
+        :param keepalive: if True, the blocks until the timer process stops
         """
         self.__process_timer.start()
         logger.info("Activity Fetcher is operational.")
@@ -84,7 +84,10 @@ class ActivityFetcher:
         self.__base_api.stop()
         logger.info("Activity Fetcher has been stopped.")
 
-    def __process_activities(self):
+    async def __process_activities(self):
+        """
+        Requests the most recent activities to Nextcloud API, converts and forwards them to the Activity Filter
+        """
 
         limit = self.__limit
 

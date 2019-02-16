@@ -1,8 +1,8 @@
 #! usr/bin/env python3.7
 
 from urllib.parse import urlunparse
-from .request_manager import RequestManager
 from .api_component import ActivityApi
+from .request_manager import RequestManager
 
 
 class NextcloudApi:
@@ -13,7 +13,7 @@ class NextcloudApi:
 
     def __init__(self, endpoint, user, password):
         """
-        Defines the URL of the API host and establishes the required basic authentication data.
+        Defines the URL of the API host and establishes the required basic authentication data
         :param endpoint: base URL of the host
         :param user: application username
         :param password: application password
@@ -28,6 +28,9 @@ class NextcloudApi:
         }
 
     async def stop(self):
+        """
+        Requests API session to be closed
+        """
         await self._request_manager.stop()
 
     def get_full_url(self, api_url):
@@ -44,7 +47,7 @@ class NextcloudApi:
         :param identifier: identifier of the API
         :return: requested API
         """
-        return self.__api[identifier]
+        return self.__api.get(identifier)
 
     @property
     def activity_api(self) -> ActivityApi:

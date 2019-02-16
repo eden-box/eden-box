@@ -6,7 +6,7 @@ from .activity_types import FileRestoredActivity
 
 class FileRestoredActivityCreator(_ActivityCreator):
     """
-    Creates objects representing Restored Files
+    Creates objects representing File Restoration
     """
 
     _identifier = "file_restored"
