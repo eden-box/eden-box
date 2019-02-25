@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+app:
+  max_queue_size: 0 # max size of the activity queue
+  process_interval: 60 # interval between queues processment TODO choose a good limit
+test:
+  max_queue_size: 0 # max size of the activity queue
+  process_interval: 5 # interval between queues processment
+...

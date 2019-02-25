@@ -1,0 +1,58 @@
+#!/usr/bin/env python3.7
+
+from activity_analyser.common import Singleton
+
+
+class ConfigManager(metaclass=Singleton):
+    """
+    Defines the type of configuration to be used by all configuration objects
+    Manages if the provided configurations should consider a deployment or a test environment
+    """
+
+    """current configuration type"""
+    __config_type = None
+
+    """configurations overseen by the manager"""
+    __configurations = {}
+
+    def __init__(self):
+        self.set_app()
+
+    def __set_config_type(self, config):
+        """
+        Set type of a configuration
+        :param config: configuration to change
+        """
+        config.set_config_type(self.__config_type)
+
+    def __update_config_type(self, config_type):
+        """
+        Propagate type of configuration all configurations
+        :param config_type: new configuration type
+        """
+        self.__config_type = config_type
+
+        # propagate to all configurations
+        for config in self.__configurations.values():
+            self.__set_config_type(config)
+
+    def set_app(self):
+        """
+        Set current configuration type as Application
+        """
+        self.__update_config_type("app")
+
+    def set_test(self):
+        """
+        Set current configuration type as Test
+        """
+        self.__update_config_type("test")
+
+    def register(self, identifier, config):
+        """
+        Register a configuration under this manager
+        :param identifier:
+        :param config:
+        """
+        self.__configurations[identifier] = config
+        self.__set_config_type(config)
