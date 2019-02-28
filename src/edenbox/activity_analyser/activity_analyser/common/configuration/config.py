@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.7
 
 import abc
+from pkg_resources import resource_filename
 from .loader import get_config
 from .config_manager import ConfigManager
 
@@ -16,9 +17,15 @@ class Config:
     """configuration contents"""
     __config = None
 
+    """default config file name"""
+    __default_config = "config.yaml"
+
+    """application custom config file name"""
+    __app_config = "app_config.yaml"
+
     def __init__(self):
 
-        self.raw_config = self.load_config(self._file_path)
+        self.raw_config = self.load_config()
 
         ConfigManager().register(self._identifier, self)
 
@@ -30,22 +37,36 @@ class Config:
         """
         pass
 
-    @property
-    @abc.abstractmethod
-    def _file_path(self):
-        """
-        Path of the configuration file
-        """
-        pass
-
     @staticmethod
-    def load_config(file_path):
+    def __load_config_from_file(path, file_name):
         """
-        Load configuration from a file
-        :param file_path: path of the file to load
+        TODO
+        :param path:
+        :param file_name:
+        :return:
+        """
+        try:
+            file_path = resource_filename(path, file_name)
+        except ImportError:
+            return {}
+
+        return get_config(file_path)
+
+    def load_config(self):
+        """
+        Load configuration
+        Loads the default configuration from a file and tries to
+        merge it with custom application configuration
         :return: configuration dict
         """
-        return get_config(file_path)
+        config = self.__load_config_from_file(self._identifier, self.__default_config)
+
+        app_config = self.__load_config_from_file(self._identifier, self.__app_config)
+
+        if app_config:
+            config.update(app_config)
+
+        return config
 
     def set_config_type(self, config_type):
         """

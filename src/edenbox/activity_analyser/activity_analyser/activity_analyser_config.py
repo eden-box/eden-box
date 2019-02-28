@@ -1,6 +1,5 @@
 #!/usr/bin/env python3.7
 
-from pkg_resources import resource_filename
 from .common.configuration.config import Config
 
 
@@ -10,8 +9,6 @@ class __ActivityAnalyserConfig(Config):
     """
 
     _identifier = __name__
-
-    _file_path = resource_filename(__name__, "config.yaml")
 
     def log_file(self):
         return self.get_property("log_file")

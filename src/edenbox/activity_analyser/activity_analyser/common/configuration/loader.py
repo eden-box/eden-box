@@ -12,11 +12,12 @@ def get_config(file_path):
     """
     config = {}
 
-    with open(file_path, 'r') as f:
-        try:
-            config = yaml.safe_load(f)
-        except yaml.YAMLError:
-            logging.getLogger(__name__).critical("Unable to access configuration file.")
+    try:
+        f = open(file_path, 'r')
+        config = yaml.safe_load(f)
+        f.close()
+    except (FileNotFoundError, yaml.YAMLError):
+        logging.getLogger(__name__).warning("Unable to access configuration file.")
 
     return config
 
