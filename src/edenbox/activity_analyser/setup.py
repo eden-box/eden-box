@@ -25,6 +25,8 @@ setup(
 
         'Programming Language :: Python :: 3.7',
 
+        'Operating System :: POSIX :: Linux',
+
         'Natural Language :: English',
     ],
 
