@@ -1,7 +1,9 @@
 %YAML 1.2
 ---
 app:
-  log_file: "<file_path>"
+  sentry_dsn: "<sentry_dsn>"
+  log_file: "/tmp/dummy_log.txt"
 test:
+  sentry_dsn: "<sentry_dsn>"
   log_file: "/tmp/dummy_log.txt"
 ...

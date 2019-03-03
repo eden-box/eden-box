@@ -10,6 +10,9 @@ class __ActivityAnalyserConfig(Config):
 
     _identifier = __name__
 
+    def sentry_dsn(self):
+        return self.get_property("sentry_dsn")
+
     def log_file(self):
         return self.get_property("log_file")
 
