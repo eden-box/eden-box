@@ -24,7 +24,7 @@ app,test:
         level: INFO,
         class: logging.handlers.TimedRotatingFileHandler,
         formatter: simple,
-        filename: <logfile_path>,                           # TODO define
+        filename: "/tmp/activity_analyser",
         when: W6,                                           # rotate on sundays
         atTime:
         backupCount: 8,                                     # keep last 8 log files

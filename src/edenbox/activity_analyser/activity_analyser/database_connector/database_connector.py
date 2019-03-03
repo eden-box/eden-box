@@ -1,9 +1,12 @@
 #!/usr/bin/env python3.7
 
+import logging
 from concurrent.futures import ThreadPoolExecutor
 from psycopg2 import pool, DatabaseError
 from .database_connector_config import DatabaseConnectorConfig as Config
 from .exceptions import FailedConnectionException, ConnectionPoolException
+
+logger = logging.getLogger(__name__)
 
 
 class DatabaseConnector:
@@ -28,7 +31,8 @@ class DatabaseConnector:
                 connect_timeout=Config.timeout()
             )
         except DatabaseError as e:
-            raise FailedConnectionException(e, "Failed to establish connection to database")
+            logger.critical("Failed to establish connection to database.")
+            raise FailedConnectionException(e, "Failed to establish connection to database.")
 
     def __get_connection(self):
         """
@@ -68,9 +72,11 @@ class DatabaseConnector:
                 conn.commit()
             cur.close()
         except pool.PoolError as e:
-            raise ConnectionPoolException(e, "Unable to obtain connection from pool")
+            logger.warning("Unable to obtain connection from pool.")
+            raise ConnectionPoolException(e, "Unable to obtain connection from pool.")
         except DatabaseError as e:
-            raise FailedConnectionException(e, "Failed to obtain connection to database")
+            logger.warning("Failed to obtain connection to database.")
+            raise FailedConnectionException(e, "Failed to obtain connection to database.")
         finally:
             if conn:
                 self.__put_connection(conn)

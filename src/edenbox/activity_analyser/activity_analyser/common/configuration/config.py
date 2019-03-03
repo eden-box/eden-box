@@ -40,10 +40,10 @@ class Config:
     @staticmethod
     def __load_config_from_file(path, file_name):
         """
-        TODO
-        :param path:
-        :param file_name:
-        :return:
+        Load configuration from a file
+        :param path: path to the file directory
+        :param file_name: file name
+        :return: configuration dict
         """
         try:
             file_path = resource_filename(path, file_name)
