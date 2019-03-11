@@ -1,23 +1,23 @@
 %YAML 1.2
 ---
 app:
-  max_workers: 4 # max threads used by thread pool TODO configure
-  min_connections: 1 # minimum number of connections in the connection pool TODO configure
-  max_connections: 4 # maximum number of connections in the connection pool TODO configure
-  host: "<host>" # host where database is located TODO configure
-  port: "<port> " # host port to connect to TODO configure
-  database: "<database>" # TODO configure
-  user: "<user>" # database username TODO configure
-  ssl_mode: "verify-full" # ssl usage definition TODO configure
-  timeout: 60 # connection to database timeout, in seconds TODO configure
+  max_workers: 4 # max threads used by thread pool
+  min_connections: 1 # minimum number of connections in the connection pool
+  max_connections: 4 # maximum number of connections in the connection pool
+  host: "<host>" # host where database is located
+  port: "<port> " # host port to connect to
+  database: "<database>"
+  user: "<user>" # database username
+  ssl_mode: "verify-full" # ssl usage definition
+  timeout: 60 # connection to database timeout, in seconds
 test:
-  max_workers: 4 # max threads used by thread pool TODO configure
-  min_connections: 1 # minimum number of connections in the connection pool TODO configure
-  max_connections: 4 # maximum number of connections in the connection pool TODO configure
-  host: "<host>" # host where database is located TODO configure
-  port: "<port> " # host port to connect to TODO configure
-  database: "<database>" # TODO configure
-  user: "<user>" # database username TODO configure
-  ssl_mode: "verify-full" # ssl usage definition TODO configure
-  timeout: 60 # connection to database timeout, in seconds TODO configure
+  max_workers: 4 # max threads used by thread pool
+  min_connections: 1 # minimum number of connections in the connection pool
+  max_connections: 4 # maximum number of connections in the connection pool
+  host: "<host>" # host where database is located
+  port: "<port> " # host port to connect to
+  database: "<database>"
+  user: "<user>" # database username
+  ssl_mode: "verify-full" # ssl usage definition
+  timeout: 60 # connection to database timeout, in seconds
 ...

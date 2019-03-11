@@ -5,11 +5,11 @@ from setuptools import setup, find_packages
 setup(
     name='activity_analyser',
 
-    version='0.5.0',
+    version='0.9.0',
 
     description='Fetches activities from an API and sends relevant information to a database.',
 
-    url='<project github page URL>',  # TODO add project github URL
+    url='https://github.com/sinistro14/eden-box',
 
     author='Eden-Box',
 
@@ -21,10 +21,11 @@ setup(
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Nextcloud Activity API consumption Tool',
 
-        # TODO choose project license
         'License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)',
 
         'Programming Language :: Python :: 3.7',
+
+        'Operating System :: POSIX :: Linux',
 
         'Natural Language :: English',
     ],
@@ -34,6 +35,7 @@ setup(
     packages=find_packages(exclude=['docs', 'tests']),
 
     install_requires=[
+        'sentry-sdk'
         'pyyaml',
         'psycopg2',
         'aiohttp',
@@ -49,9 +51,6 @@ setup(
         'xmltodict'
     ],
 
-    extras_require={
-    },
-
     # If there are data files included in your packages that need to be
     # installed, specify them here.
     package_data={
@@ -66,7 +65,7 @@ setup(
         ],
     },
 
-    project_urls={  # TODO add project github URL
-        'Source': '<project github page URL>'
+    project_urls={
+        'Source': 'https://github.com/sinistro14/eden-box'
     }
 )
