@@ -53,13 +53,16 @@ echo "Starting upload - "$STARTTIME
 
 until snf-mkimage / -u $IMAGE.diskdump -r "$DESCR" \
 -a $AUTH -t $TOKEN \
+--print-syspreps \
+--disable-sysprep shrink \
 --disable-sysprep cleanup-userdata \
 --disable-sysprep cleanup-passwords \
 --force
 
+# --disable-sysprep shrink will avoid image shrinking, required due to a snf-mkimage and GRUB related error
 # --disable-sysprep cleanup-passwords will avoid accounts to be locked and passwords deleted
 # --disable-sysprep cleanup-userdata will avoid user data to be deleted
-# force will overwrite any snapshot with the same name
+# --force will overwrite any snapshot with the same name
 
 do
   echo "Error uploading snapshot"
