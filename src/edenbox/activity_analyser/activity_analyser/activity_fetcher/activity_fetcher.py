@@ -5,7 +5,7 @@ from threading import Timer
 from pkg_resources import resource_filename
 from ..nextcloud_api import NextcloudApi
 from activity_analyser.common.configuration import loader
-from .activity_fetcher_config import ActivityFetcherConfig as Config
+from .activity_fetcher_config import ActivityFetcherConfig
 
 logger = logging.getLogger(__name__)
 
@@ -23,25 +23,27 @@ class ActivityFetcher:
     """default limit of activities received per request"""
     __limit = None
 
-    def __init__(self, activity_filter):
+    def __init__(self, activity_filter, config=None):
 
-        self.__state_file_path = resource_filename(__name__, "last_activity.yaml")
+        config = ActivityFetcherConfig(config)
+
+        self.__state_file_path = resource_filename(__name__, config.state_file())
 
         self.__load_most_recent_activity()
 
-        self.__limit = Config.max_activities_per_request()
+        self.__limit = config.max_activities_per_request()
 
         self.__activity_filter = activity_filter
 
         self.__base_api = NextcloudApi(
-            endpoint=Config.endpoint(),
-            user=Config.username(),
-            password=Config.password()
+            endpoint=config.endpoint(),
+            user=config.username(),
+            password=config.password()
         )
 
         self.__api = self.__base_api.activity_api
 
-        self.__process_timer = Timer(interval=Config.process_interval(), function=self.__process_activities)
+        self.__process_timer = Timer(interval=config.process_interval(), function=self.__process_activities)
         self.__process_timer.daemon = True
 
     def __load_most_recent_activity(self):

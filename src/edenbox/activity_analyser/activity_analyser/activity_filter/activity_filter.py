@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.7
 
 from threading import Timer
-from .activity_filter_config import ActivityFilterConfig as Config
+from .activity_filter_config import ActivityFilterConfig
 from .states import StateType, StateManager
 from .activity_queue import ActivityQueue
 from .activity_queue.exceptions import FullQueueException
@@ -24,9 +24,11 @@ class ActivityFilter:
     """stored activities"""
     activities = None
 
-    def __init__(self, db_connector):
+    def __init__(self, db_connector, config=None):
 
-        self.activities = ActivityQueue(Config.max_queue_size())
+        config = ActivityFilterConfig(config)
+
+        self.activities = ActivityQueue(config.max_queue_size())
 
         StateManager.register_state(
             StateType.DEFAULT,
@@ -35,7 +37,7 @@ class ActivityFilter:
 
         self.database_connector = db_connector
 
-        self.__process_timer = Timer(interval=Config.process_interval(), function=self.__process)
+        self.__process_timer = Timer(interval=config.process_interval(), function=self.__process)
         self.__process_timer.daemon = True
         self.__process_timer.start()
 

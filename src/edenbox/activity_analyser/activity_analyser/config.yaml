@@ -1,9 +1,18 @@
 %YAML 1.2
 ---
-app:
-  sentry_dsn: "<sentry_dsn>"
-  log_file: "/tmp/dummy_log.txt"
-test:
-  sentry_dsn: "<sentry_dsn>"
-  log_file: "/tmp/dummy_log.txt"
+# deploy configurations
+activity_analyser:
+  sentry_dsn: "<sentry_dsn>"            # sentry monitoring software dns
+
+  activity_fetcher:
+    state_file: "last_activity.yaml"    # processed activity state file path
+    endpoint: "<endpoint>"              # nextcloud API endpoint
+    username: "<username>"              # nextcloud API user
+    password: "<password>"              # nextcloud API pwd
+
+  database_connector:
+    host: "<host>"                      # host where database is located
+    port: "<port>"                      # host port to connect to
+    database: "<database>"              # database name
+    user: "<user>"                      # database username
 ...

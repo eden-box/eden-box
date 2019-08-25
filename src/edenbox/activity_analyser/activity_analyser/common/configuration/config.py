@@ -3,7 +3,6 @@
 import abc
 from pkg_resources import resource_filename
 from .loader import get_config
-from .config_manager import ConfigManager
 
 
 class Config:
@@ -11,11 +10,8 @@ class Config:
     Configuration wrapper
     """
 
-    """current type of configuration, defined by ConfigManager"""
-    __config_type = None
-
     """configuration contents"""
-    __config = None
+    _config = None
 
     """default config file name"""
     __default_config = "config.yaml"
@@ -23,17 +19,22 @@ class Config:
     """application custom config file name"""
     __app_config = "app_config.yaml"
 
-    def __init__(self):
-
-        self.raw_config = self.load_config()
-
-        ConfigManager().register(self._identifier, self)
+    def __init__(self, config=None):
+        self._config = self.load_config(config)
 
     @property
     @abc.abstractmethod
     def _identifier(self):
         """
         Configuration identifier
+        """
+        pass
+
+    @property
+    @abc.abstractmethod
+    def _config_section(self):
+        """
+        Configuration file section name
         """
         pass
 
@@ -52,7 +53,7 @@ class Config:
 
         return get_config(file_path)
 
-    def load_config(self):
+    def load_config(self, custom_config=None):
         """
         Load configuration
         Loads the default configuration from a file and tries to
@@ -61,20 +62,10 @@ class Config:
         """
         config = self.__load_config_from_file(self._identifier, self.__default_config)
 
-        app_config = self.__load_config_from_file(self._identifier, self.__app_config)
-
-        if app_config:
-            config.update(app_config)
+        if custom_config:
+            config[self._config_section].update(custom_config[self._config_section])
 
         return config
-
-    def set_config_type(self, config_type):
-        """
-        Set type of configuration
-        :param config_type: type of configuration to set
-        """
-        self.__config_type = config_type
-        self.__config = self.raw_config.get(config_type)
 
     def get_property(self, property_name):
         """
@@ -82,4 +73,4 @@ class Config:
         :param property_name:
         :return: requested property or None, if it does not exist
         """
-        return self.__config.get(property_name)  # returns None if entry does not exist
+        return self._config.get(self._config_section).get(property_name)  # returns None if entry does not exist

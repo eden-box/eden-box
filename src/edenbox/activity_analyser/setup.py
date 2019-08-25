@@ -9,7 +9,7 @@ setup(
 
     description='Fetches activities from an API and sends relevant information to a database.',
 
-    url='https://github.com/sinistro14/eden-box',
+    url='https://github.com/eden-box/eden-box',
 
     author='Eden-Box',
 
@@ -66,6 +66,6 @@ setup(
     },
 
     project_urls={
-        'Source': 'https://github.com/sinistro14/eden-box'
+        'Source': 'https://github.com/eden-box/eden-box'
     }
 )

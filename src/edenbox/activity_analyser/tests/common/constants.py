@@ -5,8 +5,16 @@ from activity_analyser.activity_filter.activity_filter_config import ActivityFil
 
 class Constants:
 
-    def max_activities(self):
+    @staticmethod
+    def dummy_process_interval():
+        """
+        Returns a dummy value for
+        """
+        return 5
+
+    @staticmethod
+    def max_activities():
         """
         Returns the number of default priority entries required to trigger contingency
         """
-        return ActivityFilterConfig.max_queue_size()
+        return ActivityFilterConfig().max_queue_size()

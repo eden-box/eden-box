@@ -1,6 +1,6 @@
 %YAML 1.2
 ---
-app,test:
+log_config:
   log_config:
     version: 1
     disable_existing_loggers: true,

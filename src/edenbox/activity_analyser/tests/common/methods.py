@@ -2,8 +2,9 @@
 
 import time
 import xmltodict
+
 from .samples import SampleManager
-from activity_analyser.activity_filter.activity_filter_config import ActivityFilterConfig  # access dispatch time config
+from .constants import Constants
 from activity_analyser.nextcloud_api.api_component.activity.factory.creators import FileAddedActivityCreator
 
 
@@ -16,7 +17,7 @@ class Methods:
         :param rounds: number of rounds to wait
         """
         if rounds > 0:
-            wait_time = (rounds * ActivityFilterConfig.process_interval()) + 1  # acceptably strict time
+            wait_time = (rounds * Constants.dummy_process_interval()) + 1  # strict time, test value of process_time
             time.sleep(wait_time)
 
     @staticmethod
@@ -71,7 +72,4 @@ class Methods:
         :return: list of dispatched queues, with dispatched queues being also lists
         """
         call_args_list = mocked_db.dispatch.call_args_list
-        args = []
-        for arg in call_args_list:
-            args.append(list(arg[0][0].queue))
-        return args
+        return [[arg[0][0].queue] for arg in call_args_list]

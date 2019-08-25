@@ -1,15 +1,10 @@
 %YAML 1.2
 ---
-app:
-  process_interval: 60
-  endpoint: "<endpoint>"
-  username: "<username>"
-  password: "<password>"
-  max_activities_per_request: 50
-test:
-  process_interval: 60
-  endpoint: "<endpoint>"
-  username: "<username>"
-  password: "<password>"
-  max_activities_per_request: 50
+activity_fetcher:
+  state_file: "last_activity.yaml"    # processed activity state file path
+  process_interval: 60                # frequency with which requests are sent to Nextcloud API, in seconds
+  endpoint: "<endpoint>"              # nextcloud API endpoint
+  username: "<username>"              # nextcloud API user
+  password: "<password>"              # nextcloud API pwd
+  max_activities_per_request: 50      # maximum number of activities that a request response may contain
 ...

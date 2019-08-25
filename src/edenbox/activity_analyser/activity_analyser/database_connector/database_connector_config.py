@@ -3,12 +3,14 @@
 from activity_analyser.common.configuration.config import Config
 
 
-class __DatabaseConnectorConfig(Config):
+class DatabaseConnectorConfig(Config):
     """
     Database connector configuration wrapper
     """
 
     _identifier = __name__
+
+    _config_section = "database_connector"
 
     def max_workers(self) -> int:
         return self.get_property("max_workers")
@@ -36,6 +38,3 @@ class __DatabaseConnectorConfig(Config):
 
     def timeout(self) -> int:
         return self.get_property("timeout")
-
-
-DatabaseConnectorConfig = __DatabaseConnectorConfig()

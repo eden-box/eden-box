@@ -3,7 +3,6 @@
 import pytest
 from pytest_mock import mocker
 from tests.common import Constants, Methods
-from activity_analyser.common.configuration import ConfigManager
 from activity_analyser.database_connector import DatabaseConnector
 
 
@@ -25,14 +24,6 @@ def helper():
     Return Helper class
     """
     return Helper()
-
-
-@pytest.fixture(autouse=True, scope="session")
-def _setup():
-    """
-    Initial test setup, run once, for all test sessions
-    """
-    ConfigManager().set_test()
 
 
 @pytest.fixture(scope="function")

@@ -24,7 +24,14 @@ class TestActivityFilter:
             :return: activity filter and corresponding mocked db connector
             """
 
-            log_filter = ActivityFilter(mocked_db_connector)
+            log_filter = ActivityFilter(
+                mocked_db_connector,
+                config={
+                    "activity_filter": {
+                        "process_interval": helper.constants.dummy_process_interval(),
+                    }
+                }
+            )
 
             helper.methods.process_queue(log_filter, activities=activities)
 

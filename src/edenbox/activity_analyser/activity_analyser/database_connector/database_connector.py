@@ -3,7 +3,7 @@
 import logging
 from concurrent.futures import ThreadPoolExecutor
 from psycopg2 import pool, DatabaseError
-from .database_connector_config import DatabaseConnectorConfig as Config
+from .database_connector_config import DatabaseConnectorConfig
 from .exceptions import FailedConnectionException, ConnectionPoolException
 
 logger = logging.getLogger(__name__)
@@ -15,20 +15,22 @@ class DatabaseConnector:
     Establishes connections to the database and processes requests
     """
 
-    def __init__(self):
+    def __init__(self, config=None):
 
-        self.__thread_pool = ThreadPoolExecutor(max_workers=Config.max_workers())
+        config = DatabaseConnectorConfig(config)
+
+        self.__thread_pool = ThreadPoolExecutor(max_workers=config.max_workers())
 
         try:
             self.__connection_pool = pool.ThreadedConnectionPool(
-                minconn=Config.min_connections(),
-                maxconn=Config.max_connections(),
-                host=Config.host(),
-                port=Config.port(),
-                database=Config.database(),
-                user=Config.user(),
-                sslmode=Config.ssl_mode(),
-                connect_timeout=Config.timeout()
+                minconn=config.min_connections(),
+                maxconn=config.max_connections(),
+                host=config.host(),
+                port=config.port(),
+                dbname=config.database(),
+                user=config.user(),
+                sslmode=config.ssl_mode(),
+                connect_timeout=config.timeout()
             )
         except DatabaseError as e:
             logger.critical("Failed to establish connection to database.")
