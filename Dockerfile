@@ -1,12 +1,9 @@
-FROM python:3.7-slim-buster as base
+FROM python:3.7-alpine as base
 
 FROM base as builder
 
 RUN mkdir /install
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    musl-dev \
-    libpq-dev
+RUN apk update && apk add postgresql-dev gcc musl-dev
 
 WORKDIR /install
 
