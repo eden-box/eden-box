@@ -23,4 +23,4 @@ ARG CONFIG
 # get deploy configuration from host
 COPY ${CONFIG}/activity_analyser/config.yaml /app/config.yaml
 
-CMD ["python -m", "app"]
+CMD ["python", "app"]
