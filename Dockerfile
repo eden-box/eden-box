@@ -15,12 +15,12 @@ FROM base
 
 COPY --from=builder /install /usr/local
 
-COPY activity_analyser /app
+COPY activity_analyser /activity_analyser
 
 # defined in docker-compose
 ARG CONFIG
 
 # get deploy configuration from host
-COPY ${CONFIG}/activity_analyser/config.yaml /app/config.yaml
+COPY ${CONFIG}/activity_analyser/config.yaml /activity_analyser/config.yaml
 
-CMD ["python", "-m", "app"]
+CMD ["python", "-m", "activity_analyser"]
