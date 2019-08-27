@@ -3,6 +3,10 @@ FROM python:3.7-slim-buster as base
 FROM base as builder
 
 RUN mkdir /install
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    musl-dev \
+    postgresql-dev \
 
 WORKDIR /install
 
