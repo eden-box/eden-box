@@ -3,7 +3,6 @@ FROM python:3.7-slim-buster as base
 FROM base as builder
 
 RUN mkdir /install
-RUN apk update && apk add postgresql-dev gcc musl-dev
 
 WORKDIR /install
 
@@ -23,4 +22,4 @@ ARG CONFIG
 # get deploy configuration from host
 COPY ${CONFIG}/activity_analyser/config.yaml /app/config.yaml
 
-CMD ["python", "./app"]
+CMD ["python -m", "app"]
