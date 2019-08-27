@@ -8,16 +8,14 @@ branches:
   only:
     - master
     - dev
-    - activ-analyser
+    - build
+    - build-test
 
-# Existing Python versions
+# python versions to test
 python:
-  - 3.5
-  - 3.6
-  - 3.7
-
-# cd to intended folder
-before_install: cd src/edenbox/activity_analyser
+  - "3.5"
+  - "3.6"
+  - "3.7"
 
 # command to install dependencies
 install:
