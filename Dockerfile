@@ -6,7 +6,7 @@ RUN mkdir /install
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     musl-dev \
-    postgresql-dev \
+    postgresql-dev
 
 WORKDIR /install
 
