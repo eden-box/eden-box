@@ -8,7 +8,7 @@ branches:
   only:
     - master
     - dev
-    - loganalyser
+    - activ-analyser
 
 # Existing Python versions
 python:
@@ -17,7 +17,7 @@ python:
   - 3.7
 
 # cd to intended folder
-before_install: cd src/edenbox/loganalyser
+before_install: cd src/edenbox/activity_analyser
 
 # command to install dependencies
 install:
@@ -25,4 +25,4 @@ install:
 
 # command to run tests
 script:
-  - python3 -m pytest
+  - python3 -m pytest -m "not manual"

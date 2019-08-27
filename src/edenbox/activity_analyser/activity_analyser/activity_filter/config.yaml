@@ -1,0 +1,6 @@
+%YAML 1.2
+---
+activity_filter:
+  max_queue_size: 0       # max size of the activity queue, 0 corresponds to infinite
+  process_interval: 60    # interval between queues processment, in seconds
+...
