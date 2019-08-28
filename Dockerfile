@@ -21,9 +21,9 @@ COPY activity_analyser /activity_analyser
 RUN apk --no-cache add libpq
 
 # defined in docker-compose
-ARG CONFIG
+ARG CONFIGPATH
 
 # get deploy configuration from host
-COPY ${CONFIG}/config.yaml /activity_analyser/
+COPY ${CONFIGPATH}/activity_analyser/config.yaml /activity_analyser/
 
 CMD ["python", "-m", "activity_analyser"]
