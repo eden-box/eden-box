@@ -15,9 +15,7 @@ FROM base
 
 COPY --from=builder /install /usr/local
 
-COPY activity_analyser /activity_analyser
-
-WORKDIR /activity_analyser
+COPY ./activity_analyser ./
 
 # fix postgresql error
 RUN apk --no-cache add libpq
@@ -26,6 +24,6 @@ RUN apk --no-cache add libpq
 ARG CONFIGPATH
 
 # get deploy configuration from host
-COPY ${CONFIGPATH}/activity_analyser/config.yaml .
+COPY ${CONFIGPATH}/activity_analyser/config.yaml ./activity_analyser/
 
 CMD ["python", "-m", "activity_analyser"]
