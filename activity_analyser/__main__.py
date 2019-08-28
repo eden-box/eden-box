@@ -9,7 +9,26 @@ from .activity_analyser_config import ActivityAnalyserConfig
 
 if __name__ == '__main__':
 
+    import socket
+    def is_connected(hostname):
+        try:
+            # see if we can resolve the host name -- tells us if there is
+            # a DNS listening
+            host = socket.gethostbyname(hostname)
+            # connect to the host -- tells us if the host is actually
+            # reachable
+            s = socket.create_connection((host, 80), 2)
+            s.close()
+            return True
+        except:
+            pass
+        return False
+
     config = ActivityAnalyserConfig()
+
+    print("Connection available: {}.".format(is_connected("www.google.com")))
+
+    print("Sentry DNS value: {}.".format(config.sentry_dsn()))
 
     sentry_sdk.init(config.sentry_dsn())
 
