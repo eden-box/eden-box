@@ -15,7 +15,7 @@ FROM base
 
 COPY --from=builder /install /usr/local
 
-COPY ./activity_analyser ./
+COPY ./activity_analyser ./activity_analyser
 
 # fix postgresql error
 RUN apk --no-cache add libpq
