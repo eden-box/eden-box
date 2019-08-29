@@ -3,6 +3,8 @@ FROM python:3.7-alpine as base
 FROM base as builder
 
 RUN mkdir /install
+RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev
+
 WORKDIR /install
 
 COPY requirements.txt /requirements.txt
@@ -13,14 +15,15 @@ FROM base
 
 COPY --from=builder /install /usr/local
 
-COPY activity_analyser /app
+COPY ./activity_analyser ./activity_analyser
+
+# fix postgresql error
+RUN apk --no-cache add libpq
 
 # defined in docker-compose
-ARG CONFIG
+ARG CONFIGPATH
 
 # get deploy configuration from host
-COPY ${CONFIG}/activity_analyser/config.yaml /app/
+COPY ./config.yaml ./activity_analyser/
 
-WORKDIR /app
-
-CMD ["python", "app"]
+CMD ["python", "-m", "activity_analyser"]
