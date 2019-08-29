@@ -4,19 +4,17 @@ import yaml
 import logging
 
 
-def get_config(file_path):
+def get_config(resource):
     """
-    Loads all the required configuration from a file
-    :param: file path to load configuration from
+    Loads all the required configuration from a binary string of a yaml file
+    :param: binary string resource
     :return: dict to use as configuration, empty if unable to load configuration
     """
     config = {}
 
     try:
-        f = open(file_path, 'r')
-        config = yaml.safe_load(f)
-        f.close()
-    except (FileNotFoundError, yaml.YAMLError):
+        config = yaml.safe_load(resource)
+    except yaml.YAMLError:
         logging.getLogger(__name__).warning("Unable to access configuration file.")
 
     return config

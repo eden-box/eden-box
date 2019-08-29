@@ -20,10 +20,4 @@ COPY ./activity_analyser ./activity_analyser
 # fix postgresql error
 RUN apk --no-cache add libpq
 
-# defined in docker-compose
-ARG CONFIGPATH
-
-# get deploy configuration from host
-COPY ${CONFIGPATH} ./activity_analyser/
-
 CMD ["python", "-m", "activity_analyser"]

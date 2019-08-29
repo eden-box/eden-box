@@ -11,8 +11,6 @@ if __name__ == '__main__':
 
     config = ActivityAnalyserConfig()
 
-    print("Sentry DNS value: {}.".format(config.sentry_dsn()))
-
     sentry_sdk.init(config.sentry_dsn())
 
     logging.config.dictConfig(LoggerConfig().logging_config())
