@@ -2,7 +2,7 @@
 ---
 log_config:
   log_config:
-    version: 2
+    version: 1
     disable_existing_loggers: true
     formatters:
       brief:
