@@ -24,6 +24,6 @@ RUN apk --no-cache add libpq
 ARG CONFIGPATH
 
 # get deploy configuration from host
-COPY ${CONFIGPATH} ./activity_analyser/
+COPY ${CONFIGPATH}/activity_analyser/config.yaml ./activity_analyser/
 
 CMD ["python", "-m", "activity_analyser"]
