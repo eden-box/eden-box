@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.7
 
 import abc
+from pkgutil import get_data
 from pkg_resources import resource_filename
 from .loader import get_config
 
@@ -46,12 +47,12 @@ class Config:
         :param file_name: file name
         :return: configuration dict
         """
-        try:
-            file_path = resource_filename(path, file_name)
-        except ImportError:
-            return {}
+        resource = get_data(path, file_name) or {}  # get_data returns None if file is not reachable
 
-        return get_config(file_path)
+        if resource:
+            return get_config(resource)
+
+        return {}
 
     def load_config(self, custom_config=None):
         """

@@ -2,8 +2,8 @@
 ---
 log_config:
   log_config:
-    version: 1
-    disable_existing_loggers: true,
+    version: 2
+    disable_existing_loggers: true
     formatters:
       brief:
         format: "%(levelname)-8s; %(name)-12s; %(message)s"
@@ -20,15 +20,18 @@ log_config:
         class: logging.StreamHandler
         level: DEBUG
         formatter: simple
+      sentry:
+        class: logging.StreamHandler
+        level: INFO
+        formatter: simple
       file:
         level: INFO,
-        class: logging.handlers.TimedRotatingFileHandler,
+        class: logging.handlers.TimedRotatingFileHandler
         formatter: simple,
-        filename: "/tmp/activity_analyser",
-        when: W6,                                           # rotate on sundays
-        atTime:
-        backupCount: 8,                                     # keep last 8 log files
-        encoding: utf-8,
+        filename: "/tmp/activity_analyser"
+        when: W6                                            # rotate on sundays
+        backupCount: 8                                     # keep last 8 log files
+        encoding: utf-8
         utc: true
     loggers:
       simple:
@@ -37,5 +40,5 @@ log_config:
         propagate: no
     root:
       level: INFO
-      handlers: [file]
+      handlers: [sentry]
 ...
