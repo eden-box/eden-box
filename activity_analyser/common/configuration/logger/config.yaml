@@ -27,7 +27,7 @@ log_config:
       file:
         level: INFO,
         class: logging.handlers.TimedRotatingFileHandler
-        formatter: simple,
+        formatter: simple
         filename: "/tmp/activity_analyser"
         when: W6                                            # rotate on sundays
         backupCount: 8                                     # keep last 8 log files
