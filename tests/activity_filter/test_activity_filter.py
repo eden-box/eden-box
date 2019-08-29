@@ -27,9 +27,7 @@ class TestActivityFilter:
             log_filter = ActivityFilter(
                 mocked_db_connector,
                 config={
-                    "activity_filter": {
-                        "process_interval": helper.constants.dummy_process_interval(),
-                    }
+                    "process_interval": helper.constants.dummy_process_interval(),
                 }
             )
 

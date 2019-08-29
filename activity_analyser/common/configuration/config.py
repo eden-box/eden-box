@@ -64,7 +64,7 @@ class Config:
         config = self.__load_config_from_file(self._identifier, self.__default_config)
 
         if custom_config:
-            config[self._config_section].update(custom_config[self._config_section])
+            config[self._config_section].update(custom_config)
 
         return config
 
