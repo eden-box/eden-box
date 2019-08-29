@@ -25,7 +25,7 @@ log_config:
         level: INFO
         formatter: simple
       file:
-        level: INFO,
+        level: INFO
         class: logging.handlers.TimedRotatingFileHandler
         formatter: simple
         filename: "/tmp/activity_analyser"
