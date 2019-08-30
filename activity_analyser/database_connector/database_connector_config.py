@@ -24,6 +24,9 @@ class DatabaseConnectorConfig(Config):
     def host(self) -> str:
         return self.get_property("host")
 
+    def host_addr(self) -> str:
+        return self.get_property("host_addr")
+
     def port(self) -> int:
         return self.get_property("port")
 

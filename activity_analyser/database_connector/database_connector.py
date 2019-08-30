@@ -26,6 +26,7 @@ class DatabaseConnector:
                 minconn=config.min_connections(),
                 maxconn=config.max_connections(),
                 host=config.host(),
+                hostaddr=config.host_addr(),
                 port=config.port(),
                 dbname=config.database(),
                 user=config.user(),

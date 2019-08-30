@@ -11,7 +11,8 @@ activity_analyser:
     password: "<password>"              # nextcloud API pwd
 
   database_connector:
-    host: "<host>"                      # host where database is located
+    host: "<host>"                      # host name
+    host_addr: "<host_addr>"              # host where database is located
     port: "<port>"                      # host port to connect to
     database: "<database>"              # database name
     user: "<user>"                      # database username

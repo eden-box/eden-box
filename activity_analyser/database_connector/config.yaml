@@ -4,7 +4,8 @@ database_connector:
   max_workers: 4          # max threads used by thread pool
   min_connections: 1      # minimum number of connections in the connection pool
   max_connections: 4      # maximum number of connections in the connection pool
-  host: "<host>"          # host where database is located
+  host: "<host>"          # host name
+  host_addr: "<host_addr>"  # host where database is located
   port: "<port>"          # host port to connect to
   database: "<database>"  # database name
   user: "<user>"          # database username
