@@ -1,9 +1,11 @@
 #! usr/bin/env python3.7
 
 import logging
+import asyncio
 from threading import Timer
-
 from pkgutil import get_data
+from pkg_resources import resource_filename
+
 from ..nextcloud_api import NextcloudApi
 from activity_analyser.common.configuration import loader
 from .activity_fetcher_config import ActivityFetcherConfig
@@ -28,6 +30,7 @@ class ActivityFetcher:
 
         config = ActivityFetcherConfig(config)
 
+        self.__state_file_path = resource_filename(__name__, config.state_file())
         self.__state_file_string = get_data(__name__, config.state_file())
 
         self.__load_most_recent_activity()
@@ -44,7 +47,7 @@ class ActivityFetcher:
 
         self.__api = self.__base_api.activity_api
 
-        self.__process_timer = Timer(interval=config.process_interval(), function=self.__process_activities)
+        self.__process_timer = Timer(interval=config.process_interval(), function=self.__timer_wrapper)
         self.__process_timer.daemon = True
 
     def __load_most_recent_activity(self):
@@ -86,6 +89,9 @@ class ActivityFetcher:
         self.__process_timer.cancel()
         self.__base_api.stop()
         logger.info("Activity Fetcher has been stopped.")
+
+    def __timer_wrapper(self):
+        asyncio.run(self.__process_activities())
 
     async def __process_activities(self):
         """
