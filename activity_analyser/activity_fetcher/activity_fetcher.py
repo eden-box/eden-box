@@ -2,7 +2,8 @@
 
 import logging
 from threading import Timer
-from pkg_resources import resource_filename
+
+from pkgutil import get_data
 from ..nextcloud_api import NextcloudApi
 from activity_analyser.common.configuration import loader
 from .activity_fetcher_config import ActivityFetcherConfig
@@ -27,7 +28,7 @@ class ActivityFetcher:
 
         config = ActivityFetcherConfig(config)
 
-        self.__state_file_path = resource_filename(__name__, config.state_file())
+        self.__state_file_string = get_data(__name__, config.state_file())
 
         self.__load_most_recent_activity()
 
@@ -50,7 +51,7 @@ class ActivityFetcher:
         """
         Load the id of the most recently processed activity
         """
-        config = loader.get_config(self.__state_file_path)
+        config = loader.get_config(self.__state_file_string)
         self.__last_activity = config.get("last_activity")
         logger.info("Loaded activity with id: %s.", self.__last_activity)
 

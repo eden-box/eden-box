@@ -2,7 +2,6 @@
 
 import abc
 from pkgutil import get_data
-from pkg_resources import resource_filename
 from .loader import get_config
 
 
