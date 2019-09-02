@@ -24,7 +24,11 @@ class RequestManager:
 
         self.auth_pk = aiohttp.BasicAuth(login=user, password=password)
 
-        self._session = aiohttp.ClientSession(auth=self.auth_pk, headers=self.h_default)
+        self._session = aiohttp.ClientSession(
+            auth=self.auth_pk,
+            headers=self.h_default,
+            timeout=aiohttp.ClientTimeout(total=250)
+        )
 
     async def stop(self):
         """

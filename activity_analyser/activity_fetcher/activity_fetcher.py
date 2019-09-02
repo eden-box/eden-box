@@ -87,7 +87,7 @@ class ActivityFetcher:
         Stop periodic requests to external API and close connections
         """
         self.__process_timer.cancel()
-        self.__base_api.stop()
+        asyncio.run(self.__base_api.stop())
         logger.info("Activity Fetcher has been stopped.")
 
     def __timer_wrapper(self):
