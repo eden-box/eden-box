@@ -91,7 +91,7 @@ class ActivityFetcher:
         logger.info("Activity Fetcher has been stopped.")
 
     def __timer_wrapper(self):
-        asyncio.run(self.__process_activities())
+        await self.__process_activities()
 
     async def __process_activities(self):
         """
