@@ -31,7 +31,7 @@ class ActivityAnalyser:
 
         self.logger.info("Log Analyser set up.")
 
-    def run(self):
+    async def run(self):
         """
         Initializes the activity analysis
         Blocks
@@ -42,7 +42,7 @@ class ActivityAnalyser:
         self.logger.info("Starting Activity Fetcher.")
         activity_fetcher = ActivityFetcher(self.activity_filter, config=self.custom_fetcher_config)
 
-        activity_fetcher.run()  # blocks
+        await activity_fetcher.run()  # blocks
 
         self.logger.info("Activity Fetcher stopped.")
 

@@ -70,7 +70,7 @@ class ActivityFetcher:
         )
         self.__last_activity = activity_id
 
-    def run(self, keepalive=True):
+    async def run(self, keepalive=True):
         """
         Initiate periodic requests to Nextcloud API
         :param keepalive: if True, the blocks until the timer process stops
@@ -80,14 +80,14 @@ class ActivityFetcher:
 
         if keepalive:
             self.__process_timer.join()
-            self.stop()
+            await self.stop()
 
-    def stop(self):
+    async def stop(self):
         """
         Stop periodic requests to external API and close connections
         """
         self.__process_timer.cancel()
-        asyncio.run(self.__base_api.stop())
+        await self.__base_api.stop()
         logger.info("Activity Fetcher has been stopped.")
 
     async def __timer_wrapper(self):
