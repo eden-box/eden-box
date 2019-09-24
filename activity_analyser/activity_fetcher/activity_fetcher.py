@@ -2,12 +2,12 @@
 
 import logging
 import asyncio
-from threading import Timer
 from pkgutil import get_data
 from pkg_resources import resource_filename
 
 from ..nextcloud_api import NextcloudApi
 from activity_analyser.common.configuration import loader
+from .async_timer import AsyncTimer
 from .activity_fetcher_config import ActivityFetcherConfig
 
 logger = logging.getLogger(__name__)
@@ -47,8 +47,12 @@ class ActivityFetcher:
 
         self.__api = self.__base_api.activity_api
 
-        self.__process_timer = Timer(interval=config.process_interval(), function=self.__timer_wrapper)
-        self.__process_timer.daemon = True
+        self.__process_timer = AsyncTimer(
+            interval=config.process_interval(),
+            initial_delay=True,
+            timer_name="AsyncTimer",
+            callback=self.__timer_wrapper
+        )
 
     def __load_most_recent_activity(self):
         """
@@ -79,8 +83,11 @@ class ActivityFetcher:
         logger.info("Activity Fetcher is operational.")
 
         if keepalive:
-            self.__process_timer.join()
-            await self.stop()
+            try:
+                loop = asyncio.get_event_loop()
+                loop.run_forever()
+            except KeyboardInterrupt:
+                await self.stop()
 
     async def stop(self):
         """
@@ -91,6 +98,9 @@ class ActivityFetcher:
         logger.info("Activity Fetcher has been stopped.")
 
     async def __timer_wrapper(self):
+        """
+        Wrapper to make a timer call awaitable
+        """
         await self.__process_activities()
 
     async def __process_activities(self):
