@@ -84,8 +84,7 @@ class ActivityFetcher:
 
         if keepalive:
             try:
-                loop = asyncio.get_event_loop()
-                loop.run_forever()
+                self.__process_timer.await_termination()
             except KeyboardInterrupt:
                 await self.stop()
 

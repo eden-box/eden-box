@@ -25,7 +25,17 @@ class AsyncTimer:
         self._task = None
 
     def start(self):
+        """
+        Initialize the timer
+        """
         self._task = asyncio.create_task(self._job())
+
+    def await_termination(self):
+        """
+        Await timer termination
+        Behaviour similar to a similar to a thread join
+        """
+        await self._task
 
     async def _job(self):
         """
@@ -40,7 +50,7 @@ class AsyncTimer:
 
     def cancel(self):
         """
-        Cancels the timer and stops the scheduled task
+        Cancel the timer and stops the scheduled task
         """
         self._active = False
         self._task.cancel()
