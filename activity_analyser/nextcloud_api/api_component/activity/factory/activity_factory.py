@@ -76,13 +76,13 @@ class ActivityFactory(metaclass=Singleton):
         """
 
         # defaults to None, if key does not exist
-        first = headers.get("X-Activity-First-Known")
+        first = int(headers.get("X-Activity-First-Known"))
 
-        last = headers.get("X-Activity-Last-Given")
+        last = int(headers.get("X-Activity-Last-Given"))
 
         activities = []
 
-        pool = Pool(processes=4)
+        pool = Pool(processes=2)
 
         def __add_activities(activity):
             """
