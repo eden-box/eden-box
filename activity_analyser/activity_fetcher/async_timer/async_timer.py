@@ -30,7 +30,7 @@ class AsyncTimer:
         """
         self._task = asyncio.create_task(self._job())
 
-    def await_termination(self):
+    async def await_termination(self):
         """
         Await timer termination
         Behaviour similar to a similar to a thread join

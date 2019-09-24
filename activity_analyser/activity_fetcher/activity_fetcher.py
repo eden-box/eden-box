@@ -84,7 +84,7 @@ class ActivityFetcher:
 
         if keepalive:
             try:
-                self.__process_timer.await_termination()
+                await self.__process_timer.await_termination()
             except KeyboardInterrupt:
                 await self.stop()
 
