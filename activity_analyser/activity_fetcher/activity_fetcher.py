@@ -1,7 +1,6 @@
 #! usr/bin/env python3.7
 
 import logging
-import asyncio
 from pkgutil import get_data
 from pkg_resources import resource_filename
 

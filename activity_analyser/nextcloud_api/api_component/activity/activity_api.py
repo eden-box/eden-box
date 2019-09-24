@@ -16,7 +16,7 @@ class ActivityApi(_ApiComponent):
     """Factory able to convert XML dicts to Activities"""
     __activity_factory = ActivityFactory()
 
-    async def get_activities(self, since="", limit="", object_type="", object_id="", sort="") -> Activities:
+    async def get_activities(self, since=None, limit=None, object_type=None, object_id=None, sort=None) -> Activities:
         """
         Return the available activities, filtered based on a set of parameters
         The most recent activity received is defined by the since parameter, from there, all the available activities,
