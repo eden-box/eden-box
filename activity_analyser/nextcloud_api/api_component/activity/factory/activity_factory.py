@@ -76,9 +76,9 @@ class ActivityFactory(metaclass=Singleton):
         """
 
         # defaults to None, if key does not exist
-        first = int(headers.get("X-Activity-First-Known"))
+        first = headers.get("X-Activity-First-Known")
 
-        last = int(headers.get("X-Activity-Last-Given"))
+        last = headers.get("X-Activity-Last-Given")
 
         activities = []
 

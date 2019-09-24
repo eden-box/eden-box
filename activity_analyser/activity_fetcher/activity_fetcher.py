@@ -59,7 +59,7 @@ class ActivityFetcher:
         Load the id of the most recently processed activity
         """
         config = loader.get_config(self.__state_file_string)
-        self.__last_activity = config.get("last_activity")
+        self.__last_activity = int(config.get("last_activity"))
         logger.info("Loaded activity with id: %s.", self.__last_activity)
 
     def __set_last_activity(self, activity_id):
