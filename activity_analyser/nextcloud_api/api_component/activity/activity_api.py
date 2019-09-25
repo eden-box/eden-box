@@ -21,6 +21,8 @@ class ActivityApi(_ApiComponent):
         Return the available activities, filtered based on a set of parameters
         The most recent activity received is defined by the since parameter, from there, all the available activities,
         older than that one, will be gathered until the limit value of activities is reached
+        This method arguments correspond to the dict keys expected by the API, and are directly used in the requests,
+        therefore, they should not be mindlessly changed.
         :param since: ID of the most recent activity to be received (default behaviour: most recent activity available)
         :param limit: number of activities to be returned (default: 50)
         :param object_type: allows to filter activities to an object type, may only appear together with object_id
@@ -29,13 +31,7 @@ class ActivityApi(_ApiComponent):
         :return: tuple with response body (XML) and response headers (Dict)
         """
 
-        params = {
-            "since": since,
-            "limit": limit,
-            "object_type": object_type,
-            "object_id": object_id,
-            "sort": sort
-        }
+        params = {k: v for k, v in locals().items() if k != "self" and v}  # ignore self object key, None and "" values
 
         body, headers, status = await self._request_manager.get(url=self._api_url, query_components=params)
 
