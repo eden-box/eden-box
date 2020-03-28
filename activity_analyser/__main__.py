@@ -14,7 +14,7 @@ async def main():
     config = ActivityAnalyserConfig()
 
     sentry_sdk.init(
-        config.sentry_dsn(),
+        dsn=config.sentry_dsn(),
         integrations=[AioHttpIntegration()]
     )
 
