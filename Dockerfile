@@ -5,8 +5,8 @@ FROM base as builder
 RUN mkdir /install
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install gcc && \
-    apt-get clean
+    apt-get install -y \
+    gcc
 
 WORKDIR /install
 
