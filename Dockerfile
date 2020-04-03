@@ -18,7 +18,7 @@ WORKDIR /home/app
 
 COPY --chown=app:app requirements.txt requirements.txt
 
-RUN pip install --user -r /requirements.txt
+RUN pip install --user -r requirements.txt
 
 ENV PATH="/home/app/.local/bin:${PATH}"
 
