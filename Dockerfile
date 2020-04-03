@@ -12,7 +12,7 @@ RUN apt-get update && \
 
 RUN pip install --upgrade pip
 
-RUN adduser -D app
+RUN useradd -ms /bin/bash app
 USER app
 WORKDIR /home/app
 
