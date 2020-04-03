@@ -10,17 +10,18 @@ RUN apt-get update && \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /install
-
-COPY requirements.txt /requirements.txt
-
 RUN pip install --upgrade pip
-RUN pip install --no-cache-dir --install-option="--prefix=/install" -r /requirements.txt
 
-FROM base
+RUN adduser -D app
+USER app
+WORKDIR /home/app
 
-COPY --from=builder /install /usr/local
+COPY --chown=app:app requirements.txt requirements.txt
 
-COPY ./activity_analyser ./activity_analyser
+RUN pip install --user -r /requirements.txt
 
-CMD ["python", "-m", "activity_analyser"]
+ENV PATH="/home/app/.local/bin:${PATH}"
+
+COPY --chown=app:app ./activity_analyser ./activity_analyser
+
+ENTRYPOINT ["python", "-m", "activity_analyser"]

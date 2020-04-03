@@ -37,7 +37,7 @@ setup(
     install_requires=[
         'sentry-sdk'
         'pyyaml',
-        'psycopg2',
+        'psycopg2-binary',
         'aiohttp',
         'xmltodict',
         'python-dateutil'
