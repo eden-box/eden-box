@@ -11,7 +11,8 @@ RUN apt-get update && \
 
 RUN pip install --upgrade pip
 
-ENV APPUSER=app APPUSERID=500
+ARG APPUSER=app
+ARG APPUSERID=500
 
 RUN useradd -ms /bin/bash ${APPUSER} -u ${APPUSERID}
 USER ${APPUSER}
