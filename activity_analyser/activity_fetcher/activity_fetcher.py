@@ -78,7 +78,10 @@ class ActivityFetcher:
         Initiate periodic requests to Nextcloud API
         :param keepalive: if True, the blocks until the timer process stops
         """
+        logger.info("Initializing Activity Fetcher timer.")
         self.__process_timer.start()
+        logger.info("Initializing Activity Fetcher timer is operational.")
+
         logger.info("Activity Fetcher is operational.")
 
         if keepalive:
