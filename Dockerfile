@@ -16,12 +16,10 @@ USER app
 WORKDIR /home/app
 
 COPY --chown=app:app requirements.txt requirements.txt
-RUN pip install --no-cache-dir --user -r requirements.txt
+RUN pip install --user -r requirements.txt
 
 ENV PATH="/home/app/.local/bin:${PATH}"
 
 COPY --chown=app:app ./activity_analyser ./activity_analyser
-COPY --chown=app:app ./config.yaml ./activity_analyser/config.yaml
-COPY --chown=app:app ./pgcerts /certs
 
 ENTRYPOINT ["python", "-m", "activity_analyser"]
