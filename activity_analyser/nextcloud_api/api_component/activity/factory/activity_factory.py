@@ -1,11 +1,16 @@
 #!/usr/bin/env python3.7
 
+import logging
 import xmltodict
+from xml.parsers.expat import ExpatError
 from multiprocessing import Pool
 from .creators import *
 from .activities import Activities
 from activity_analyser.common import Singleton
 from .activity_processor import ActivityProcessor
+
+
+logger = logging.getLogger(__name__)
 
 
 class ActivityFactory(metaclass=Singleton):
@@ -103,7 +108,10 @@ class ActivityFactory(metaclass=Singleton):
             pool.apply_async(func=ActivityProcessor.create_activity, args=(self, activity), callback=__add_activities)
             return True
 
-        xmltodict.parse(xml_object, item_depth=3, item_callback=__add_to_pool)
+        try:
+            xmltodict.parse(xml_object, item_depth=3, item_callback=__add_to_pool)
+        except ExpatError as e:
+            logger.exception(e)
 
         pool.close()
         pool.join()
