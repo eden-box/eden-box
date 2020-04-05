@@ -1,0 +1,1 @@
+from .local_queue_handler import setup_logging_queue

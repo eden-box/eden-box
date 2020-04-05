@@ -30,7 +30,7 @@ log_config:
         formatter: simple
         filename: "/tmp/activity_analyser"
         when: W6                                            # rotate on sundays
-        backupCount: 8                                     # keep last 8 log files
+        backupCount: 8                                      # keep last 8 log files
         encoding: utf-8
         utc: true
     loggers:

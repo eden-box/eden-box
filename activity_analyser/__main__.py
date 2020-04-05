@@ -2,6 +2,7 @@
 
 import asyncio
 import logging.config
+from .common import setup_logging_queue
 import sentry_sdk
 from sentry_sdk.integrations.aiohttp import AioHttpIntegration
 
@@ -15,10 +16,13 @@ async def main():
 
     sentry_sdk.init(
         config.sentry_dsn(),
-        integrations=[AioHttpIntegration()]
+        integrations=[
+            AioHttpIntegration(),
+        ]
     )
 
     logging.config.dictConfig(LoggerConfig().logging_config())
+    setup_logging_queue()
 
     log_analyser = ActivityAnalyser(config)
 
