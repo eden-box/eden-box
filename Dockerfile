@@ -11,15 +11,17 @@ RUN apt-get update && \
 
 RUN pip install --upgrade pip
 
-RUN useradd -ms /bin/bash app
-USER app
-WORKDIR /home/app
+ENV APPUSER=app APPUSERID=500
 
-COPY --chown=app:app requirements.txt requirements.txt
+RUN useradd -ms /bin/bash $APPUSER -u $APPUSERID
+USER $APPUSER
+WORKDIR /home/$APPUSER
+
+COPY --chown=$APPUSER:$APPUSER requirements.txt requirements.txt
 RUN pip install --user -r requirements.txt
 
 ENV PATH="/home/app/.local/bin:${PATH}"
 
-COPY --chown=app:app ./activity_analyser ./activity_analyser
+COPY --chown=$APPUSER:$APPUSER ./activity_analyser ./activity_analyser
 
 ENTRYPOINT ["python", "-m", "activity_analyser"]
