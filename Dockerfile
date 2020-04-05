@@ -17,11 +17,11 @@ RUN useradd -ms /bin/bash $APPUSER -u $APPUSERID
 USER $APPUSER
 WORKDIR /home/$APPUSER
 
-COPY --chown=$APPUSER:$APPUSER requirements.txt requirements.txt
+COPY --chown=${APPUSER}:${APPUSER} requirements.txt requirements.txt
 RUN pip install --user -r requirements.txt
 
 ENV PATH="/home/app/.local/bin:${PATH}"
 
-COPY --chown=$APPUSER:$APPUSER ./activity_analyser ./activity_analyser
+COPY --chown=${APPUSER}:${APPUSER} ./activity_analyser ./activity_analyser
 
 ENTRYPOINT ["python", "-m", "activity_analyser"]
