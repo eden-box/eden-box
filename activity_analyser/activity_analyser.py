@@ -41,6 +41,7 @@ class ActivityAnalyser:
 
         self.logger.info("Starting Activity Fetcher.")
         activity_fetcher = ActivityFetcher(self.activity_filter, config=self.custom_fetcher_config)
+        self.logger.info("Activity Fetcher timer started.")
 
         await activity_fetcher.run()  # blocks
 
