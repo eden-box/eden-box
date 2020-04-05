@@ -2,6 +2,8 @@ FROM python:3.7.7-slim as base
 
 FROM base as builder
 
+RUN mkdir /app
+
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
@@ -11,17 +13,12 @@ RUN apt-get update && \
 
 RUN pip install --upgrade pip
 
-ENV APPUSERID=500
+WORKDIR /app
 
-RUN useradd -ms /bin/bash app -u ${APPUSERID}
-USER app
-WORKDIR /home/app
+COPY requirements.txt /requirements.txt
 
-COPY --chown=app:app requirements.txt requirements.txt
-RUN pip install --user -r requirements.txt
+RUN pip install --no-cache-dir --user -r /requirements.txt
 
-ENV PATH="/home/app/.local/bin:${PATH}"
+COPY ./activity_analyser ./activity_analyser
 
-COPY --chown=app:app ./activity_analyser ./activity_analyser
-
-ENTRYPOINT ["python", "-m", "activity_analyser"]
+CMD ["python", "-m", "activity_analyser"]
