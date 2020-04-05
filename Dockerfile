@@ -13,9 +13,9 @@ RUN pip install --upgrade pip
 
 ENV APPUSER=app APPUSERID=500
 
-RUN useradd -ms /bin/bash $APPUSER -u $APPUSERID
-USER $APPUSER
-WORKDIR /home/$APPUSER
+RUN useradd -ms /bin/bash ${APPUSER} -u ${APPUSERID}
+USER ${APPUSER}
+WORKDIR /home/${APPUSER}
 
 COPY --chown=${APPUSER}:${APPUSER} requirements.txt requirements.txt
 RUN pip install --user -r requirements.txt
