@@ -1,4 +1,7 @@
 # eden-box
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/dc5be6ab503549208e3520327ee184ff)](https://app.codacy.com/gh/eden-box/activity-analyser?utm_source=github.com&utm_medium=referral&utm_content=eden-box/activity-analyser&utm_campaign=Badge_Grade_Dashboard)
+
 Eden Box Project
 
 ## Description
